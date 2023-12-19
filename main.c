@@ -4,6 +4,7 @@
 
 #include "listes.h"
 #include "arbres.h"
+#include "autre/polynomes.h"
 
 ArbreBin *exempleArbre()
 {
@@ -55,5 +56,6 @@ int main(int argc, char *argv[])
 {
 
     arbres();
+    polynomes();
     // listes();
 }
