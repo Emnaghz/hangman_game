@@ -348,18 +348,88 @@ bool estABR(ArbreBin *A)
     }
 }
 
-// A FAIRE: fonction qui localise l'elt minimal d'un sous arbre , le supprime de l'arbre et donne sa valeur
-ArbreBin *suppMinimal(ArbreBin *A)
+// générer deux sous-arbres G et D suivant la clé introduite
+// deux cas de figure
+void coupure(ArbreBin *A, int cle, ArbreBin **G, ArbreBin **D)
 {
     if (!A)
     {
-        return NULL;
+        *G = NULL;
+        *D = NULL;
     }
     else
     {
+        if (A->val > cle)
+        {
+            *D = A;
+            coupure(A->FG, cle, G, &((*D)->FG));
+        }
+        else
+        {
+            *G = A;
+            coupure(A->FD, cle, &((*G)->FD), D);
+        }
     }
 }
-
+void *insererRacine(ArbreBin **A, int cle)
+{
+    ArbreBin *racine = creerFeuille(cle);
+    ArbreBin *G = NULL;
+    ArbreBin *D = NULL;
+    coupure(*A, cle, &G, &D);
+    racine->FG = G;
+    racine->FD = D;
+    *A = racine;
+}
+void supMax(ArbreBin **A, int *max)
+{
+    if (!(*A)->FD)
+    {
+        *max = (*A)->val;
+        ArbreBin *tmp = *A;
+        *A = (*A)->FG;
+        free(tmp);
+    }
+    else
+    {
+        supMax(&((*A)->FD), max);
+    }
+}
+void suppression(ArbreBin **A, int cle)
+{
+    if (*A)
+    {
+        if ((*A)->val > cle)
+        {
+            suppression(&((*A)->FG), cle);
+        }
+        else if ((*A)->val < cle)
+        {
+            suppression(&((*A)->FD), cle);
+        }
+        else
+        {
+            if (!(*A)->FD)
+            {
+                ArbreBin *tmp = *A;
+                *A = (*A)->FG;
+                free(tmp);
+            }
+            else if (!(*A)->FG)
+            {
+                ArbreBin *tmp = *A;
+                *A = (*A)->FD;
+                free(tmp);
+            }
+            else
+            {
+                int max;
+                supMax(A, &max);
+                (*A)->val = max;
+            }
+        }
+    }
+}
 void libererArbre(ArbreBin *P)
 {
     if (P)

@@ -26,20 +26,39 @@ ArbreBin *exempleArbre()
 void arbres()
 {
     ArbreBin *A = exempleArbre();
+    // afficherArbreBinaire(A);
+    // ArbreBin *G = NULL;
+    // ArbreBin *D = NULL;
+    // suppression(&A,12);
+    // coupure(A, 13, &G, &D);
     afficherArbreBinaire(A);
-    printf("parcours infixe: (pour un ABR on obtient des valeurs triées) ");
     parcoursInfixe(A);
-    printf("\n l'arbre est binaire (0:non | 1: oui) %d", estABR(A));
-    printf("\n l'hauteur  de l'arbre est %d ", hauteurAbreRecur(A));
-    printf("\n le nombres de feuilles  de l'arbre %d ", nombreFeuilles(A));
-    printf("\n maximum  de l'arbre %d ", maximumArbre(A));
-    int entree;
-    printf("quel elt cherchez-vous dans l'arbre? ");
-    scanf("%d", &entree);
-    printf("\n recherche récursive de l'element %d dans l'arbre (0:non | 1: oui) %d ",entree, rechercheArbreBin(A, 25));
-    printf("\n sous arbre avec la cle %d \n",entree);
-    afficherArbreBinaire(rechercheArbreBin2(A, entree));
-    libererArbre(A);
+    // insererRacine(&A,13);
+    // coupure(A, 13, &G, &D);
+    // parcoursInfixe(G);
+    // printf("\n");
+    // parcoursInfixe(D);
+
+
+    // afficherArbreBinaire(A);
+    // printf("\n sous arbre gauche \n");
+    // afficherArbreBinaire(G);
+    // printf("\n sous arbre droite \n");
+    // afficherArbreBinaire(D);
+
+    // printf("parcours infixe: (pour un ABR on obtient des valeurs triées) ");
+    // parcoursInfixe(A);
+    // printf("\n l'arbre est binaire (0:non | 1: oui) %d", estABR(A));
+    // printf("\n l'hauteur  de l'arbre est %d ", hauteurAbreRecur(A));
+    // printf("\n le nombres de feuilles  de l'arbre %d ", nombreFeuilles(A));
+    // printf("\n maximum  de l'arbre %d ", maximumArbre(A));
+    // int entree;
+    // printf("quel elt cherchez-vous dans l'arbre? ");
+    // scanf("%d", &entree);
+    // printf("\n recherche récursive de l'element %d dans l'arbre (0:non | 1: oui) %d ",entree, rechercheArbreBin(A, 25));
+    // printf("\n sous arbre avec la cle %d \n",entree);
+    // afficherArbreBinaire(rechercheArbreBin2(A, entree));
+    // libererArbre(A);
 }
 
 void listes()
@@ -56,6 +75,6 @@ int main(int argc, char *argv[])
 {
 
     arbres();
-    polynomes();
+    // polynomes();
     // listes();
 }
