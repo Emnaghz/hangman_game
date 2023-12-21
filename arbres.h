@@ -5,13 +5,11 @@ typedef struct ArbreBin
     struct ArbreBin *FD;
 } ArbreBin;
 
-// structures de données pour traiter les files et le parcours en largeur
 typedef struct QueueNode
 {
     ArbreBin *arbre;
     struct QueueNode *suiv;
 } QueueNode;
-
 typedef struct Queue
 {
     QueueNode *tete;
@@ -72,12 +70,10 @@ int fileEstVide(Queue *file)
 {
     return (file->tete == NULL);
 }
-
 ArbreBin *initArbreBin()
 {
     return NULL;
 }
-
 ArbreBin *creerFeuille(char n)
 {
     ArbreBin *elt = (ArbreBin *)malloc(sizeof(ArbreBin));
@@ -168,7 +164,6 @@ int nombreFeuilles(ArbreBin *A)
             return nombreFeuilles(A->FG) + nombreFeuilles(A->FD);
     }
 }
-// affichage par niveau
 void afficherArbreBinaire(ArbreBin *A)
 {
     if (A)
@@ -213,9 +208,7 @@ void afficherArbreBinaire(ArbreBin *A)
                         enqueue(file, blank);
                     }
                     enqueue(file, currentArbre->FD);
-                    
                 }
-                
             }
             else
             {
@@ -274,7 +267,6 @@ bool estComplet(ArbreBin *A)
         return estComplet(A->FD) && estComplet(A->FG);
     }
 }
-
 bool rechercheArbreBin(ArbreBin *A, char x)
 {
     if (!A)
@@ -290,7 +282,6 @@ bool rechercheArbreBin(ArbreBin *A, char x)
         return rechercheArbreBin(A->FG, x) || rechercheArbreBin(A->FD, x);
     }
 }
-// Retourne le père et le fils pour un arbre binaire
 ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle)
 {
     if (!A)
@@ -319,7 +310,6 @@ ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle)
         }
     }
 }
-// recherche recursive dans un arbre binaire
 ArbreBin *rechercheRecurABR(ArbreBin *A, int cle)
 {
     if (!A)
@@ -342,7 +332,6 @@ ArbreBin *rechercheRecurABR(ArbreBin *A, int cle)
         }
     }
 }
-// basique
 bool estABR(ArbreBin *A)
 {
     if ((!A) || (!A->FD && !A->FG))
@@ -358,9 +347,6 @@ bool estABR(ArbreBin *A)
         return (estABR(A->FD) && estABR(A->FG));
     }
 }
-
-// générer deux sous-arbres G et D suivant la clé introduite
-// deux cas de figure
 void coupure(ArbreBin *A, char cle, ArbreBin **G, ArbreBin **D)
 {
     if (!A)
@@ -410,7 +396,6 @@ void *insererFeuille(ArbreBin **A, char cle)
         }
     }
 }
-// supprimer le maximum (valeur la plus à droite d'un sous arbre)
 void supMax(ArbreBin **A, char *max)
 {
     if (!(*A)->FD)
@@ -473,68 +458,60 @@ void libererArbre(ArbreBin *P)
         free(P);
     }
 }
+// traitement des arbres n-aires
+// ArbreBin *genererABR0()
+// {
+//     FILE *file = fopen("dictionnaire.txt", "r");
+//     char ligne[100];
+//     int i = 0;
+//     ArbreBin *courant;
+//     while (fgets(ligne, sizeof(ligne), file) != NULL)
+//     {
+//         ligne[strcspn(ligne, "\n")] = '\0';
+//         if (dictionnaire->val == '\0') // dictionnaire vide
+//         {
+//             dictionnaire = creerFeuille(ligne[0]);
+//             courant = dictionnaire;
+//         }
+//         else
+//         {
+//             // autres débuts
+//             if (ligne[0] != courant->val)
+//             {
+//                 insererFeuille(&dictionnaire, ligne[0]); // s'insère naturellement à droite
+//                 courant = courant->FD;
+//             }
+//         }
+//     }
+//     fclose(file);
+//     return dictionnaire;
+// }
 
-// v0
-ArbreBin *genererABR0()
-{
-    // mots triés alphabétiquement
-    FILE *file = fopen("dictionnaire.txt", "r");
-    ArbreBin *dictionnaire = creerFeuille('\0');
-    char ligne[100];
-    // que mettre a la racine?
-    // parcourir combien de fois?
-    int i = 0;
-    ArbreBin *courant;
-    // tester pour le premier caractère
-    while (fgets(ligne, sizeof(ligne), file) != NULL)
-    {
-        ligne[strcspn(ligne, "\n")] = '\0';
-        if (dictionnaire->val == '\0') // dictionnaire vide
-        {
-            dictionnaire = creerFeuille(ligne[0]);
-            courant = dictionnaire;
-        }
-        else
-        {
-            // autres débuts
-            if (ligne[0] != courant->val)
-            {
-                insererFeuille(&dictionnaire, ligne[0]); // s'insère naturellement à droite
-                courant = courant->FD;
-            }
-        }
-    }
-    fclose(file);
-    return dictionnaire;
-}
+// void insertWordIntoKTree(ArbreNaire *root, char *word)
+// {
+//     ArbreNaire *current = root;
+//     while (*word != '\0')
+//     {
+//         int found = 0;
+//         for (int i = 0; i < current->nenfants; i++)
+//         {
+//             if (current->enfants[i]->data == *word)
+//             {
+//                 current = current->enfants[i];
+//                 found = 1;
+//                 break;
+//             }
+//         }
 
-ArbreBin *genererABR()
-{
-    // mots triés alphabétiquement!
-    FILE *file = fopen("dictionnaire.txt", "r");
-    ArbreBin *dictionnaire = NULL;
-    ArbreBin *courant;
-    char ligne[100];
-    int i = 0;
-    while (fgets(ligne, sizeof(ligne), file) != NULL)
-    {
-        // mot complet, constuire au fur et a mesure?
-        ligne[strcspn(ligne, "\n")] = '\0';
-        if (!dictionnaire)
-        {
-            insererFeuille(&dictionnaire, ligne[i]);
-            courant = dictionnaire;
-        }
-        if (i == 0 && courant->val != ligne[i])
-        {
-            insererFeuille(&dictionnaire, ligne[i]);
-            courant = courant->FD;
-        }
-
-        if (feof(file))
-        {
-        }
-    }
-    fclose(file);
-    return dictionnaire;
-}
+//         if (!found)
+//         {
+//             current->enfants[current->nenfants++] = initArbreNaire(*word, 5); // Assuming a maximum of 3 children per node
+//             current = current->enfants[current->nenfants - 1];
+//         }
+//         word++;
+//     }
+//     if (current != NULL)
+//     {
+//         current->data = '@';
+//     }
+// }

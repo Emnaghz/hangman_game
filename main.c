@@ -6,6 +6,7 @@
 #include "verifortho.h"
 #include "arbres.h"
 #include "autre/polynomes.h"
+#include "arbresnaires.h"
 
 ArbreBin *exempleArbre()
 {
@@ -23,6 +24,8 @@ ArbreBin *exempleArbre()
     // A->FD->FD = creerFeuille('x');
     return A;
 }
+
+
 void arbres()
 {
     ArbreBin *A = exempleArbre();
@@ -80,7 +83,8 @@ void verifcateur_orthographe()
 
 int main(int argc, char *argv[])
 {
-    arbres();
+    // arbres();
+    testNaire();
     // polynomes();
     // listes();
     // verifcateur_orthographe();
