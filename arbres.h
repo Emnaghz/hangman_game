@@ -5,6 +5,7 @@ typedef struct ArbreBin
     struct ArbreBin *FD;
 } ArbreBin;
 
+// structures de données pour traiter les files et le parcours en largeur
 typedef struct QueueNode
 {
     ArbreBin *arbre;
@@ -141,12 +142,12 @@ int max3(int a, int b, int c)
         return c;
     }
 }
-int hauteurAbreRecur(ArbreBin *A)
+int hauteurArbreRecur(ArbreBin *A)
 {
     if ((A == NULL) || ((A->FG == NULL) && (A->FD == NULL)))
         return 0;
     else
-        return 1 + max2(hauteurAbreRecur(A->FG), hauteurAbreRecur(A->FD));
+        return 1 + max2(hauteurArbreRecur(A->FG), hauteurArbreRecur(A->FD));
 }
 int maximumArbre(ArbreBin *A)
 {
@@ -172,7 +173,7 @@ void afficherArbreBinaire(ArbreBin *A)
 {
     if (A)
     {
-        int hauteur = hauteurAbreRecur(A);
+        int hauteur = hauteurArbreRecur(A);
 
         Queue *file = createQueue();
         ArbreBin *delim = initArbreBin();
@@ -247,7 +248,7 @@ void parcoursPrefixe(ArbreBin *A)
 }
 bool estComplet(ArbreBin *A)
 {
-    //la condition d'arret: un noeud a exactement un seul fils!
+    // la condition d'arret: un noeud a exactement un seul fils!
     if (!A->FG && A->FD || !A->FD && A->FG)
     {
         return false;
@@ -259,28 +260,10 @@ bool estComplet(ArbreBin *A)
     }
     else
     {
-        return estComplet(A->FD)&& estComplet(A->FG);
+        return estComplet(A->FD) && estComplet(A->FG);
     }
 }
-ArbreBin *insererArbreBinRecherche(ArbreBin *A, int n)
-{
-    if (A == NULL)
-    {
-        A = creerFeuille(n);
-    }
-    else
-    {
-        if ((n >= A->val) && (A->FD != NULL))
-        {
-            A = insererArbreBinRecherche(A->FD, n);
-        }
-        else if ((n < A->val) && (A->FG != NULL))
-        {
-            A = insererArbreBinRecherche(A->FG, n);
-        }
-    }
-    return A;
-}
+
 
 bool rechercheArbreBin(ArbreBin *A, int x)
 {
@@ -399,6 +382,25 @@ void *insererRacine(ArbreBin **A, int cle)
     racine->FD = D;
     *A = racine;
 }
+void *insererFeuille(ArbreBin **A, int cle)
+{
+    if (!(*A))
+    {
+        *A = creerFeuille(cle);
+    }
+    else
+    {
+        if (cle > (*A)->val)
+        {
+            insererFeuille(&((*A)->FD), cle);
+        }
+        else
+        {
+            insererFeuille(&((*A)->FG), cle);
+        }
+    }
+}
+// supprimer le maximum (valeur la plus à droite d'un sous arbre)
 void supMax(ArbreBin **A, int *max)
 {
     if (!(*A)->FD)

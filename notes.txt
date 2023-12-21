@@ -1,0 +1,2 @@
+* l'affichage de l'arbre binaire doit etre amélioré
+                        void afficherArbreBinaire(ArbreBin *A)

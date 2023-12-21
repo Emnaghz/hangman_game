@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "listes.h"
+#include "dict.h"
 #include "arbres.h"
 #include "autre/polynomes.h"
 
@@ -26,11 +28,13 @@ ArbreBin *exempleArbre()
 void arbres()
 {
     ArbreBin *A = exempleArbre();
+    // A=insererArbreBinRecherche(A,36);
     // afficherArbreBinaire(A);
     // ArbreBin *G = NULL;
     // ArbreBin *D = NULL;
     // suppression(&A,12);
     // coupure(A, 13, &G, &D);
+    insererFeuille(&A, 36);
     afficherArbreBinaire(A);
     parcoursInfixe(A);
     // insererRacine(&A,13);
@@ -38,7 +42,6 @@ void arbres()
     // parcoursInfixe(G);
     // printf("\n");
     // parcoursInfixe(D);
-
 
     // afficherArbreBinaire(A);
     // printf("\n sous arbre gauche \n");
@@ -70,11 +73,23 @@ void listes()
     afficherListe(l2);
     libererListe(l2);
 }
+void verifcateur_orthographe()
+{
+    Dictionnaire *D = initDictionnaire();
+    Noeud *n = creerFeuilleDict("Dithyrambe");
+    D->racine = n;
+    insererNoeud(&(D->racine), "Pyrrhonien");
+    insererNoeud(&(D->racine), "Xylophane");
+    insererNoeud(&(D->racine), "Rhume");
+    parcoursInfixeDict(D->racine);
+    printf("Hauteur du dict : %d , racine est %s, le mot Xylophane existe %d \n", hauteurDictionnaire(D->racine), D->racine->mot, existeDict(D->racine, "Xylophane"));
+}
 
 int main(int argc, char *argv[])
 {
 
-    arbres();
+    // arbres();
     // polynomes();
     // listes();
+    verifcateur_orthographe();
 }
