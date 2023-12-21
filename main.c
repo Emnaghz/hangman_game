@@ -2,42 +2,35 @@
 #include <math.h>
 #include <stdbool.h>
 #include <string.h>
-
 #include "listes.h"
-#include "dict.h"
+#include "verifortho.h"
 #include "arbres.h"
 #include "autre/polynomes.h"
 
 ArbreBin *exempleArbre()
 {
-    // 0              12
-    // 1       10           18
-    // 2      4    11     17    25
+    // 0              p
+    // 1        c           t
+    // 2      a    j    s     x
     ArbreBin *A;
     A = initArbreBin();
-    A = creerFeuille(12);
-    A->FG = creerFeuille(10);
-    A->FD = creerFeuille(18);
-    A->FG->FG = creerFeuille(4);
-    A->FG->FD = creerFeuille(11);
-    A->FD->FG = creerFeuille(17);
-    A->FD->FD = creerFeuille(25);
-
+    A = creerFeuille('p');
+    A->FG = creerFeuille('c');
+    A->FD = creerFeuille('t');
+    // A->FG->FG = creerFeuille('a');
+    A->FG->FD = creerFeuille('j');
+    A->FD->FG = creerFeuille('s');
+    // A->FD->FD = creerFeuille('x');
     return A;
 }
 void arbres()
 {
     ArbreBin *A = exempleArbre();
-    // A=insererArbreBinRecherche(A,36);
-    // afficherArbreBinaire(A);
-    // ArbreBin *G = NULL;
-    // ArbreBin *D = NULL;
-    // suppression(&A,12);
-    // coupure(A, 13, &G, &D);
-    insererFeuille(&A, 36);
+    // ArbreBin *dictionnaire = genererABR();
+
     afficherArbreBinaire(A);
-    parcoursInfixe(A);
-    // insererRacine(&A,13);
+    // parcoursInfixe(dictionnaire);
+
     // coupure(A, 13, &G, &D);
     // parcoursInfixe(G);
     // printf("\n");
@@ -87,9 +80,8 @@ void verifcateur_orthographe()
 
 int main(int argc, char *argv[])
 {
-
-    // arbres();
+    arbres();
     // polynomes();
     // listes();
-    verifcateur_orthographe();
+    // verifcateur_orthographe();
 }

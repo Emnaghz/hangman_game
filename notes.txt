@@ -1,2 +1,12 @@
 * l'affichage de l'arbre binaire doit etre amélioré
                         void afficherArbreBinaire(ArbreBin *A)
+
+
+ le fils droit est un pointeur vers
+  une autre lettre possible en même position 
+  et le fils gauche est un pointeur vers
+   la suite possible du mot. 
+
+
+les lettres qui se suivent de fils droit 
+en fils droit sont ordonnées

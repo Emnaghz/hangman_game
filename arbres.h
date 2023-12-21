@@ -1,6 +1,6 @@
 typedef struct ArbreBin
 {
-    int val;
+    char val;
     struct ArbreBin *FG;
     struct ArbreBin *FD;
 } ArbreBin;
@@ -78,7 +78,7 @@ ArbreBin *initArbreBin()
     return NULL;
 }
 
-ArbreBin *creerFeuille(int n)
+ArbreBin *creerFeuille(char n)
 {
     ArbreBin *elt = (ArbreBin *)malloc(sizeof(ArbreBin));
     elt->val = n;
@@ -120,14 +120,14 @@ int hauteurArbreIter(ArbreBin *A)
     }
     return niveau;
 }
-int max2(int x, int y)
+char max2(char x, char y)
 {
     if (x > y)
         return x;
     else
         return y;
 }
-int max3(int a, int b, int c)
+char max3(char a, char b, char c)
 {
     if (a >= b && a >= c)
     {
@@ -149,7 +149,7 @@ int hauteurArbreRecur(ArbreBin *A)
     else
         return 1 + max2(hauteurArbreRecur(A->FG), hauteurArbreRecur(A->FD));
 }
-int maximumArbre(ArbreBin *A)
+char maximumArbre(ArbreBin *A)
 {
     if (A == NULL)
         return -1;
@@ -177,6 +177,7 @@ void afficherArbreBinaire(ArbreBin *A)
 
         Queue *file = createQueue();
         ArbreBin *delim = initArbreBin();
+        ArbreBin *blank = creerFeuille('-');
 
         enqueue(file, A);
         enqueue(file, delim);
@@ -192,7 +193,7 @@ void afficherArbreBinaire(ArbreBin *A)
                 {
                     printf(" ");
                 }
-                printf(" %d ", currentArbre->val);
+                printf(" %c ", currentArbre->val);
                 for (int i = 0; i < espaces; i++)
                 {
                     printf(" ");
@@ -200,11 +201,21 @@ void afficherArbreBinaire(ArbreBin *A)
                 if (currentArbre->FG != NULL)
                 {
                     enqueue(file, currentArbre->FG);
+                    if (!currentArbre->FD)
+                    {
+                        enqueue(file, blank);
+                    }
                 }
                 if (currentArbre->FD != NULL)
                 {
+                    if (!currentArbre->FG)
+                    {
+                        enqueue(file, blank);
+                    }
                     enqueue(file, currentArbre->FD);
+                    
                 }
+                
             }
             else
             {
@@ -224,7 +235,7 @@ void parcoursInfixe(ArbreBin *A)
     if (A)
     {
         parcoursInfixe(A->FG);
-        printf(" %d ", A->val);
+        printf(" %c ", A->val);
         parcoursInfixe(A->FD);
     }
 }
@@ -234,7 +245,7 @@ void parcoursPostfixe(ArbreBin *A)
     {
         parcoursPostfixe(A->FG);
         parcoursPostfixe(A->FD);
-        printf(" %d ", A->val);
+        printf(" %c ", A->val);
     }
 }
 void parcoursPrefixe(ArbreBin *A)
@@ -243,7 +254,7 @@ void parcoursPrefixe(ArbreBin *A)
     {
         parcoursPrefixe(A->FG);
         parcoursPrefixe(A->FD);
-        printf(" %d ", A->val);
+        printf(" %c ", A->val);
     }
 }
 bool estComplet(ArbreBin *A)
@@ -264,8 +275,7 @@ bool estComplet(ArbreBin *A)
     }
 }
 
-
-bool rechercheArbreBin(ArbreBin *A, int x)
+bool rechercheArbreBin(ArbreBin *A, char x)
 {
     if (!A)
     {
@@ -281,7 +291,7 @@ bool rechercheArbreBin(ArbreBin *A, int x)
     }
 }
 // Retourne le père et le fils pour un arbre binaire
-ArbreBin *rechercheArbreBin2(ArbreBin *A, int cle)
+ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle)
 {
     if (!A)
     {
@@ -351,7 +361,7 @@ bool estABR(ArbreBin *A)
 
 // générer deux sous-arbres G et D suivant la clé introduite
 // deux cas de figure
-void coupure(ArbreBin *A, int cle, ArbreBin **G, ArbreBin **D)
+void coupure(ArbreBin *A, char cle, ArbreBin **G, ArbreBin **D)
 {
     if (!A)
     {
@@ -372,7 +382,7 @@ void coupure(ArbreBin *A, int cle, ArbreBin **G, ArbreBin **D)
         }
     }
 }
-void *insererRacine(ArbreBin **A, int cle)
+void *insererRacine(ArbreBin **A, char cle)
 {
     ArbreBin *racine = creerFeuille(cle);
     ArbreBin *G = NULL;
@@ -382,7 +392,7 @@ void *insererRacine(ArbreBin **A, int cle)
     racine->FD = D;
     *A = racine;
 }
-void *insererFeuille(ArbreBin **A, int cle)
+void *insererFeuille(ArbreBin **A, char cle)
 {
     if (!(*A))
     {
@@ -401,7 +411,7 @@ void *insererFeuille(ArbreBin **A, int cle)
     }
 }
 // supprimer le maximum (valeur la plus à droite d'un sous arbre)
-void supMax(ArbreBin **A, int *max)
+void supMax(ArbreBin **A, char *max)
 {
     if (!(*A)->FD)
     {
@@ -415,7 +425,7 @@ void supMax(ArbreBin **A, int *max)
         supMax(&((*A)->FD), max);
     }
 }
-void suppression(ArbreBin **A, int cle)
+void suppression(ArbreBin **A, char cle)
 {
     if (*A)
     {
@@ -447,7 +457,7 @@ void suppression(ArbreBin **A, int cle)
             // deux fils
             else
             {
-                int max;
+                char max;
                 supMax(A, &max);
                 (*A)->val = max;
             }
@@ -462,4 +472,69 @@ void libererArbre(ArbreBin *P)
         libererArbre(P->FD);
         free(P);
     }
+}
+
+// v0
+ArbreBin *genererABR0()
+{
+    // mots triés alphabétiquement
+    FILE *file = fopen("dictionnaire.txt", "r");
+    ArbreBin *dictionnaire = creerFeuille('\0');
+    char ligne[100];
+    // que mettre a la racine?
+    // parcourir combien de fois?
+    int i = 0;
+    ArbreBin *courant;
+    // tester pour le premier caractère
+    while (fgets(ligne, sizeof(ligne), file) != NULL)
+    {
+        ligne[strcspn(ligne, "\n")] = '\0';
+        if (dictionnaire->val == '\0') // dictionnaire vide
+        {
+            dictionnaire = creerFeuille(ligne[0]);
+            courant = dictionnaire;
+        }
+        else
+        {
+            // autres débuts
+            if (ligne[0] != courant->val)
+            {
+                insererFeuille(&dictionnaire, ligne[0]); // s'insère naturellement à droite
+                courant = courant->FD;
+            }
+        }
+    }
+    fclose(file);
+    return dictionnaire;
+}
+
+ArbreBin *genererABR()
+{
+    // mots triés alphabétiquement!
+    FILE *file = fopen("dictionnaire.txt", "r");
+    ArbreBin *dictionnaire = NULL;
+    ArbreBin *courant;
+    char ligne[100];
+    int i = 0;
+    while (fgets(ligne, sizeof(ligne), file) != NULL)
+    {
+        // mot complet, constuire au fur et a mesure?
+        ligne[strcspn(ligne, "\n")] = '\0';
+        if (!dictionnaire)
+        {
+            insererFeuille(&dictionnaire, ligne[i]);
+            courant = dictionnaire;
+        }
+        if (i == 0 && courant->val != ligne[i])
+        {
+            insererFeuille(&dictionnaire, ligne[i]);
+            courant = courant->FD;
+        }
+
+        if (feof(file))
+        {
+        }
+    }
+    fclose(file);
+    return dictionnaire;
 }
