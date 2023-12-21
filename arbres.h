@@ -245,6 +245,23 @@ void parcoursPrefixe(ArbreBin *A)
         printf(" %d ", A->val);
     }
 }
+bool estComplet(ArbreBin *A)
+{
+    //la condition d'arret: un noeud a exactement un seul fils!
+    if (!A->FG && A->FD || !A->FD && A->FG)
+    {
+        return false;
+    }
+    // condition d'arret: feuille
+    else if (!(A->FG) && !(A->FD))
+    {
+        return true;
+    }
+    else
+    {
+        return estComplet(A->FD)&& estComplet(A->FG);
+    }
+}
 ArbreBin *insererArbreBinRecherche(ArbreBin *A, int n)
 {
     if (A == NULL)
@@ -332,6 +349,7 @@ ArbreBin *rechercheRecurABR(ArbreBin *A, int cle)
         }
     }
 }
+// basique
 bool estABR(ArbreBin *A)
 {
     if ((!A) || (!A->FD && !A->FG))
@@ -408,19 +426,23 @@ void suppression(ArbreBin **A, int cle)
             suppression(&((*A)->FD), cle);
         }
         else
+
         {
+            // 1 ou 0 fils
             if (!(*A)->FD)
             {
                 ArbreBin *tmp = *A;
                 *A = (*A)->FG;
                 free(tmp);
             }
+            // exactement un seul fils
             else if (!(*A)->FG)
             {
                 ArbreBin *tmp = *A;
                 *A = (*A)->FD;
                 free(tmp);
             }
+            // deux fils
             else
             {
                 int max;
