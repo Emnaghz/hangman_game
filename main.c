@@ -29,9 +29,14 @@ ArbreBin *exempleArbre()
 void arbres()
 {
     ArbreBin *A = exempleArbre();
-    // ArbreBin *dictionnaire = genererABR();
+    Liste *L=initListe();
 
+    // ArbreBin *dictionnaire = genererABR();
+    // ArbreBin *P=rechercheRecurABR(A,'j',&L);
+    // ArbreBin *P=rechercheArbreBin2(A,'j',&L);
+    noeudsdelarbre(A,&L);
     afficherArbreBinaire(A);
+    afficherListe(L);
     // parcoursInfixe(dictionnaire);
 
     // coupure(A, 13, &G, &D);
@@ -83,8 +88,8 @@ void verifcateur_orthographe()
 
 int main(int argc, char *argv[])
 {
-    // arbres();
-    testNaire();
+    arbres();
+    // testNaire();
     // polynomes();
     // listes();
     // verifcateur_orthographe();

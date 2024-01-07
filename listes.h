@@ -86,7 +86,7 @@ void afficherListe(Liste *L)
     Liste *tmp = L;
     while (tmp != NULL)
     {
-        printf(" %d ", tmp->val);
+        printf(" %c ", tmp->val);
         tmp = tmp->suiv;
     }
     printf("\n");

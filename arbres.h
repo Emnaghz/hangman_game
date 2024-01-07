@@ -282,27 +282,28 @@ bool rechercheArbreBin(ArbreBin *A, char x)
         return rechercheArbreBin(A->FG, x) || rechercheArbreBin(A->FD, x);
     }
 }
-ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle)
+// for general purpose trees
+ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle, Liste **L)
 {
     if (!A)
     {
         return NULL;
     }
+
     if (A->val == cle)
     {
+        *L = ajouterElementDebut(*L, A->val);
         return A;
     }
     else
     {
-        ArbreBin *gauche = rechercheArbreBin2(A->FG, cle);
-        ArbreBin *droite = rechercheArbreBin2(A->FD, cle);
-        if (gauche)
+        ArbreBin *gauche = rechercheArbreBin2(A->FG, cle, L);
+        ArbreBin *droite = rechercheArbreBin2(A->FD, cle, L);
+
+        if (gauche || droite)
         {
-            return gauche;
-        }
-        else if (droite)
-        {
-            return droite;
+            *L = ajouterElementDebut(*L, A->val);
+            return (gauche) ? gauche : droite;
         }
         else
         {
@@ -310,26 +311,44 @@ ArbreBin *rechercheArbreBin2(ArbreBin *A, char cle)
         }
     }
 }
-ArbreBin *rechercheRecurABR(ArbreBin *A, int cle)
+ArbreBin *rechercheRecurABR(ArbreBin *A, char cle, Liste **L)
 {
     if (!A)
     {
         return NULL;
     }
+
+    *L = ajouterElementDebut(*L, A->val);
+
     if (A->val == cle)
     {
         return A;
     }
+    else if (A->val > cle)
+    {
+        return rechercheRecurABR(A->FG, cle, L);
+    }
     else
     {
-        if (A->val > cle)
-        {
-            return rechercheRecurABR(A->FG, cle);
-        }
-        else
-        {
-            return rechercheRecurABR(A->FD, cle);
-        }
+        return rechercheRecurABR(A->FD, cle, L);
+    }
+}
+void noeudsdelarbre(ArbreBin *A, Liste **L)
+{
+    if (!A)
+    {
+        // Base case: A is a null node, do nothing
+    }
+    else if (!A->FD && !A->FG)
+    {
+        // Leaf node: add its value to the list
+        *L = ajouterElementDebut(*L, A->val);
+    }
+    else
+    {
+        // Internal node: recursively process the children
+        noeudsdelarbre(A->FD, L);
+        noeudsdelarbre(A->FG, L);
     }
 }
 bool estABR(ArbreBin *A)
