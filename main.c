@@ -65,32 +65,8 @@ void arbres()
     // libererArbre(A);
 }
 
-void listes()
-{
-    Liste *l1, *l2, *l3;
-    int T[] = {1, 2, 3, 4, 5};
-    l2 = creerListeDunTableau2(l2, T, 5);
-    l2 = inverserListe(l2);
-    afficherListe(l2);
-    libererListe(l2);
-}
-void verifcateur_orthographe()
-{
-    Dictionnaire *D = initDictionnaire();
-    Noeud *n = creerFeuilleDict("Dithyrambe");
-    D->racine = n;
-    insererNoeud(&(D->racine), "Pyrrhonien");
-    insererNoeud(&(D->racine), "Xylophane");
-    insererNoeud(&(D->racine), "Rhume");
-    parcoursInfixeDict(D->racine);
-    printf("Hauteur du dict : %d , racine est %s, le mot Xylophane existe %d \n", hauteurDictionnaire(D->racine), D->racine->mot, existeDict(D->racine, "Xylophane"));
-}
-
 int main(int argc, char *argv[])
 {
     arbres();
-    // testNaire();
-    // polynomes();
-    // listes();
-    // verifcateur_orthographe();
+    
 }
