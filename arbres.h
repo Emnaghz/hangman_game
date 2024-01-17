@@ -188,7 +188,14 @@ void afficherArbreBinaire(ArbreBin *A)
                 {
                     printf(" ");
                 }
-                printf(" %c ", currentArbre->val);
+                if (currentArbre->val == '\0')
+                {
+                    printf(" 0 ");
+                }
+                else
+                {
+                    printf(" %c ", currentArbre->val);
+                }
                 for (int i = 0; i < espaces; i++)
                 {
                     printf(" ");
@@ -208,6 +215,11 @@ void afficherArbreBinaire(ArbreBin *A)
                         enqueue(file, blank);
                     }
                     enqueue(file, currentArbre->FD);
+                }
+                if (currentArbre->val != '-' && !currentArbre->FG && !currentArbre->FD)
+                {
+                    enqueue(file, blank);
+                    enqueue(file, blank);
                 }
             }
             else
@@ -333,24 +345,25 @@ ArbreBin *rechercheRecurABR(ArbreBin *A, char cle, Liste **L)
         return rechercheRecurABR(A->FD, cle, L);
     }
 }
-void noeudsdelarbre(ArbreBin *A, Liste **L)
-{
-    if (!A)
-    {
-        // Base case: A is a null node, do nothing
-    }
-    else if (!A->FD && !A->FG)
-    {
-        // Leaf node: add its value to the list
-        *L = ajouterElementDebut(*L, A->val);
-    }
-    else
-    {
-        // Internal node: recursively process the children
-        noeudsdelarbre(A->FD, L);
-        noeudsdelarbre(A->FG, L);
-    }
-}
+
+// void noeudsdelarbre(ArbreBin *A, Liste **L)
+// {
+//     if (!A)
+//     {
+//         // Base case: A is a null node, do nothing
+//     }
+//     else if (!A->FD && !A->FG)
+//     {
+//         // Leaf node: add its value to the list
+//         *L = ajouterElementDebut(*L, A->val);
+//     }
+//     else
+//     {
+//         // Internal node: recursively process the children
+//         noeudsdelarbre(A->FD, L);
+//         noeudsdelarbre(A->FG, L);
+//     }
+// }
 bool estABR(ArbreBin *A)
 {
     if ((!A) || (!A->FD && !A->FG))
@@ -477,60 +490,37 @@ void libererArbre(ArbreBin *P)
         free(P);
     }
 }
-// traitement des arbres n-aires
-// ArbreBin *genererABR0()
-// {
-//     FILE *file = fopen("dictionnaire.txt", "r");
-//     char ligne[100];
-//     int i = 0;
-//     ArbreBin *courant;
-//     while (fgets(ligne, sizeof(ligne), file) != NULL)
-//     {
-//         ligne[strcspn(ligne, "\n")] = '\0';
-//         if (dictionnaire->val == '\0') // dictionnaire vide
-//         {
-//             dictionnaire = creerFeuille(ligne[0]);
-//             courant = dictionnaire;
-//         }
-//         else
-//         {
-//             // autres débuts
-//             if (ligne[0] != courant->val)
-//             {
-//                 insererFeuille(&dictionnaire, ligne[0]); // s'insère naturellement à droite
-//                 courant = courant->FD;
-//             }
-//         }
-//     }
-//     fclose(file);
-//     return dictionnaire;
-// }
+void generateMermaidScript(ArbreBin *root)
+{
+    FILE *file = fopen("mermaid.md", "w");
 
-// void insertWordIntoKTree(ArbreNaire *root, char *word)
-// {
-//     ArbreNaire *current = root;
-//     while (*word != '\0')
-//     {
-//         int found = 0;
-//         for (int i = 0; i < current->nenfants; i++)
-//         {
-//             if (current->enfants[i]->data == *word)
-//             {
-//                 current = current->enfants[i];
-//                 found = 1;
-//                 break;
-//             }
-//         }
+    if (root == NULL)
+    {
+        return;
+    }
 
-//         if (!found)
-//         {
-//             current->enfants[current->nenfants++] = initArbreNaire(*word, 5); // Assuming a maximum of 3 children per node
-//             current = current->enfants[current->nenfants - 1];
-//         }
-//         word++;
-//     }
-//     if (current != NULL)
-//     {
-//         current->data = '@';
-//     }
-// }
+    fprintf(file,"```mermaid \n graph TD;\n");
+    generateMermaidNodes(root,file);
+    fclose(file);
+
+}
+void generateMermaidNodes(ArbreBin *node, FILE *file)
+{
+    if (node != NULL) {
+        // Assign a unique name to each node
+        fprintf(file, "  %p[%c]\n", (void *)node, node->val);
+
+        if (node->FG != NULL) {
+            fprintf(file, "  %p --> %p\n", (void *)node, (void *)node->FG);
+            fprintf(file, "  style %p fill:#ffaaaa,color:#000000;  \n", (void *)node->FG);
+            generateMermaidNodes(node->FG, file);
+        }
+
+        if (node->FD != NULL) {
+            fprintf(file, "  %p --> %p\n", (void *)node, (void *)node->FD);
+            fprintf(file, "  style %p fill:#aaaaff,color:#000000;  \n", (void *)node->FD);
+            
+            generateMermaidNodes(node->FD, file);
+        }
+    }
+}

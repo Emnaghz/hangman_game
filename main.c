@@ -3,40 +3,40 @@
 #include <stdbool.h>
 #include <string.h>
 #include "listes.h"
-#include "verifortho.h"
 #include "arbres.h"
-#include "autre/polynomes.h"
-#include "arbresnaires.h"
+#include "dico.c"
 
 ArbreBin *exempleArbre()
 {
-    // 0              p
-    // 1        c           t
+    // 0              a
+    // 1         c           t
     // 2      a    j    s     x
     ArbreBin *A;
     A = initArbreBin();
-    A = creerFeuille('p');
+    A = creerFeuille('a');
     A->FG = creerFeuille('c');
     A->FD = creerFeuille('t');
-    // A->FG->FG = creerFeuille('a');
-    A->FG->FD = creerFeuille('j');
-    A->FD->FG = creerFeuille('s');
-    // A->FD->FD = creerFeuille('x');
+    A->FD->FG = creerFeuille('t');
+    A->FD->FD = creerFeuille('e');
+    A->FG->FD = creerFeuille('f');
+    A->FG->FG = creerFeuille('\0');
+
     return A;
 }
-
 
 void arbres()
 {
     ArbreBin *A = exempleArbre();
-    Liste *L=initListe();
+    generateMermaidScript(A);
+
+    // Liste *L=initListe();
 
     // ArbreBin *dictionnaire = genererABR();
     // ArbreBin *P=rechercheRecurABR(A,'j',&L);
     // ArbreBin *P=rechercheArbreBin2(A,'j',&L);
-    noeudsdelarbre(A,&L);
-    afficherArbreBinaire(A);
-    afficherListe(L);
+    // noeudsdelarbre(A,&L);
+    // afficherArbreBinaire(A);
+    // afficherListe(L);
     // parcoursInfixe(dictionnaire);
 
     // coupure(A, 13, &G, &D);
@@ -68,5 +68,6 @@ void arbres()
 int main(int argc, char *argv[])
 {
     arbres();
-    
+    // char *testing="";
+    // int a=piocherMot(&testing);
 }
