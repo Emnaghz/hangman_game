@@ -6,6 +6,10 @@
 #include "arbres.h"
 #include "dico.c"
 #include <stdlib.h>
+// ANSI escape codes for text colors
+#define ANSI_COLOR_RED "\x1b[31m"
+#define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
 ArbreBin *exempleArbre()
 {
     // 0              a
@@ -34,7 +38,7 @@ char *motAleatoire(char **motArray, int motCount)
     srand(time(NULL));
     // Generate a random index
     int randomIndex = rand() % motCount;
-    //printf("%d", randomIndex);
+    // printf("%d", randomIndex);
 
     // Return the word at the random index
     return motArray[randomIndex];
@@ -81,8 +85,42 @@ void arbres()
     // afficherArbreBinaire(rechercheArbreBin2(A, entree));
     // libererArbre(A);
 }
+
+void printBox(char *word)
+{
+    // Calculate the length of the word
+    int wordLength = strlen(word);
+
+    // Print the top border of the box
+    printf("┌");
+    for (int i = 0; i < wordLength + 2; i++)
+    {
+        printf("─");
+    }
+    printf("┐\n");
+
+    // Print the middle part of the box with the word
+    printf("│ %s │\n", word);
+
+    // Print the bottom border of the box
+    printf("└");
+    for (int i = 0; i < wordLength + 2; i++)
+    {
+        printf("─");
+    }
+    printf("┘\n");
+}
+
 void afficherMot(char *mot, char *lettresDevinees)
 {
+    int wordLength = strlen(mot);
+    printf("┌");
+    for (int i = 0; i < wordLength * 2 + 1; i++)
+    {
+        printf("─");
+    }
+    printf("┐\n");
+    printf("│ ");
     for (int i = 0; i < strlen(mot); i++)
     {
         if (strchr(lettresDevinees, mot[i]) != NULL)
@@ -94,6 +132,13 @@ void afficherMot(char *mot, char *lettresDevinees)
             printf("* ");
         }
     }
+    printf("│\n");
+    printf("└");
+    for (int i = 0; i < wordLength * 2 + 1; i++)
+    {
+        printf("─");
+    }
+    printf("┘\n");
     printf("\n");
 }
 
@@ -137,6 +182,15 @@ int hangman(char *mot, int maxTentatives, char a)
 
             if (motComplet)
             {
+                printf("%s   _____                            _         _       _   _                   _ %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s  / ____|                          | |       | |     | | (_)                 | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s | |     ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___  | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s | |    / _ \\| '_ \\ / _` | '__/ _` | __| | | | |/ _` | __| |/ _ \\| '_ \\/ __| | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s | |___| (_) | | | | (_| | | | (_| | |_| |_| | | (_| | |_| | (_) | | | \\__ \\ |_|%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s  \\_____\\___/|_| |_|\\__, |_|  \\__,_|\\__|\\__,_|_|\\__,_|\\__|_|\\___/|_| |_|___/ (_)%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s                     __/ |                                                      %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s                    |___/                                                       %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+
                 printf("Félicitations ! Vous avez deviné le mot : %s\n", mot);
                 return 1;
             }
@@ -185,6 +239,14 @@ int hangman(char *mot, int maxTentatives, char a)
             //                 tentatives++;}
         }
     }
+    printf("%s   _____                                             %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s  / ____|                                            %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s | |  __  __ _ _ __ ___   ___    _____   _____ _ __ %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s | | |_ |/ _` | '_ ` _ \\ / _ \\  / _ \\ \\ / / _ \\ '__|%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s | |__| | (_| | | | | | |  __/ | (_) \\ V /  __/ |   %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s  \\_____|\\__,_|_| |_| |_|\\___|  \\___/ \\_/ \\___|_|   %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s                                                    %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    printf("%s                                                    %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
 
     printf("Dommage ! Vous n'avez pas réussi à deviner le mot. Le mot était : %s\n", mot);
     return 0;
@@ -268,8 +330,8 @@ int main(int argc, char *argv[])
     printf("e: easy ,m :medium , h: hard \n");
     scanf(" %1s", a);
     char *randomWord = motAleatoire(motArray, motCount);
-    printf("Mot aleatoire : %s\n", randomWord);
-    // Get the length of the random word
+    // printf("Mot aleatoire : %s\n", randomWord);
+    //  Get the length of the random word
     int wordLength = strlen(randomWord);
     // Print * for each character in the word
     for (int i = 0; i < wordLength; i++)
