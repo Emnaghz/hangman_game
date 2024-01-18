@@ -86,31 +86,6 @@ void arbres()
     // libererArbre(A);
 }
 
-void printBox(char *word)
-{
-    // Calculate the length of the word
-    int wordLength = strlen(word);
-
-    // Print the top border of the box
-    printf("┌");
-    for (int i = 0; i < wordLength + 2; i++)
-    {
-        printf("─");
-    }
-    printf("┐\n");
-
-    // Print the middle part of the box with the word
-    printf("│ %s │\n", word);
-
-    // Print the bottom border of the box
-    printf("└");
-    for (int i = 0; i < wordLength + 2; i++)
-    {
-        printf("─");
-    }
-    printf("┘\n");
-}
-
 void afficherMot(char *mot, char *lettresDevinees)
 {
     int wordLength = strlen(mot);
@@ -151,9 +126,8 @@ int hangman(char *mot, int maxTentatives, char a)
 
     while (tentatives < maxTentatives)
     {
-        printf("\nTentative %d/%d\n", tentatives + 1, maxTentatives);
+        printf("\nIl vous reste %d tentative sur %d\n", maxTentatives - tentatives, maxTentatives);
         afficherMot(mot, lettresDevinees);
-
         char lettre;
         printf("Devinez une lettre : ");
         scanf(" %c", &lettre);
@@ -169,6 +143,7 @@ int hangman(char *mot, int maxTentatives, char a)
 
         if (strchr(mot, lettre) != NULL)
         {
+            
             printf("Bonne devinette !\n");
             int motComplet = 1;
             for (int i = 0; i < strlen(mot); i++)
@@ -198,7 +173,8 @@ int hangman(char *mot, int maxTentatives, char a)
         else
         {
             if (a == 'm')
-            {
+            {   
+                printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   │\n");
                 printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
@@ -207,22 +183,24 @@ int hangman(char *mot, int maxTentatives, char a)
                 printf(" ┃  %c %c\n", tentatives < 6 ? ' ' : '/', tentatives < 7 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                // printf("Désolé, la lettre n'est pas dans le mot.\n");
+                //printf("Désolé, la lettre %c n'est pas dans le mot.\n", lettre);
                 tentatives++;
             }
             if (a == 'h')
             {
+                printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   %c\n", tentatives < 0 ? ' ' : 'O');
                 printf(" ┃  %c%s%c\n", tentatives < 2 ? ' ' : '/', tentatives < 1 ? " " : "│", tentatives < 3 ? ' ' : '\\');
                 printf(" ┃  %c %c\n", tentatives < 4 ? ' ' : '/', tentatives < 5 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                // printf("Désolé, la lettre n'est pas dans le mot.\n");
+                //printf("Désolé, la lettre n'est pas dans le mot.\n");
                 tentatives++;
             }
             if (a == 'e')
             {
+                printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
                 printf(" ┃  %c%s%c\n", tentatives < 3 ? ' ' : '/', tentatives < 2 ? " " : "│", tentatives < 4 ? ' ' : '\\');
@@ -331,13 +309,7 @@ int main(int argc, char *argv[])
     scanf(" %1s", a);
     char *randomWord = motAleatoire(motArray, motCount);
     // printf("Mot aleatoire : %s\n", randomWord);
-    //  Get the length of the random word
-    int wordLength = strlen(randomWord);
-    // Print * for each character in the word
-    for (int i = 0; i < wordLength; i++)
-    {
-        printf("*");
-    }
+
     printf("\n");
     switch (a[0])
     {
