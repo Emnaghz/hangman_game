@@ -490,20 +490,6 @@ void libererArbre(ArbreBin *P)
         free(P);
     }
 }
-void generateMermaidScript(ArbreBin *root)
-{
-    FILE *file = fopen("mermaid.md", "w");
-
-    if (root == NULL)
-    {
-        return;
-    }
-
-    fprintf(file,"```mermaid \n graph TD;\n");
-    generateMermaidNodes(root,file);
-    fclose(file);
-
-}
 void generateMermaidNodes(ArbreBin *node, FILE *file)
 {
     if (node != NULL) {
@@ -523,4 +509,28 @@ void generateMermaidNodes(ArbreBin *node, FILE *file)
             generateMermaidNodes(node->FD, file);
         }
     }
+}
+void generateMermaidScript(ArbreBin *root)
+{
+    FILE *file = fopen("mermaid.md", "w");
+
+    if (root == NULL)
+    {
+        return;
+    }
+
+    fprintf(file,"```mermaid \n graph TD;\n");
+    generateMermaidNodes(root,file);
+    fclose(file);
+
+}
+
+ArbreBin* arbreConNoeud(char val, ArbreBin *FG, ArbreBin *FD) {
+    ArbreBin *nouveauNoeud = (ArbreBin*)malloc(sizeof(ArbreBin));
+    if (nouveauNoeud != NULL) {
+        nouveauNoeud->val = val;
+        nouveauNoeud->FG = FG;
+        nouveauNoeud->FD = FD;
+    }
+    return nouveauNoeud;
 }

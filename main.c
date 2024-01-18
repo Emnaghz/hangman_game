@@ -27,6 +27,7 @@ ArbreBin *exempleArbre()
 void arbres()
 {
     ArbreBin *A = exempleArbre();
+    QueueNode *queue = NULL; 
     generateMermaidScript(A);
 
     // Liste *L=initListe();
@@ -66,8 +67,19 @@ void arbres()
 }
 
 int main(int argc, char *argv[])
-{
+{char manuelle[100];
     arbres();
+      ArbreBin *A;
+    QueueNode *queue = NULL;
     // char *testing="";
     // int a=piocherMot(&testing);
+    for(int i=0;i<4;i++)
+    {
+        printf("donner le mot a inserer ");
+    scanf("%s",manuelle);
+    dicoInsererMot(manuelle,&A,&queue);
+    printf("l'arbre est");
+    afficherArbreBinaire(A);}
+
+
 }
