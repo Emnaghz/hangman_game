@@ -69,17 +69,59 @@ void arbres()
 int main(int argc, char *argv[])
 {char manuelle[100];
     arbres();
-      ArbreBin *A;
+    int choix;
+        ArbreBin *A =NULL;
+        char **motArray = NULL;
+    int motCount = 0;
+        creerDictionnaire(&A,&motArray,&motCount);
     QueueNode *queue = NULL;
+        // afficherArbreBinaire(A);
+        for (int i = 0; i < motCount; i++)
+    {
+        printf("%s\n", motArray[i]);
+    }
     // char *testing="";
     // int a=piocherMot(&testing);
-    for(int i=0;i<4;i++)
-    {
+    printf("voulez vous ajouter d'autre mots manuellement ? \n");
+     printf("1 :oui  \n 0:non \n");
+    scanf("%d",&choix);
+        while(choix==1){
         printf("donner le mot a inserer ");
     scanf("%s",manuelle);
-    dicoInsererMot(manuelle,&A,&queue);
-    printf("l'arbre est");
-    afficherArbreBinaire(A);}
+      // Allocate memory for the new word in the dynamic array
+    char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
+    if (newWord == NULL)
+    {
+        printf("\nMemory allocation error");
+        break;
+    }
 
+    // Copy the manually entered word to the new memory
+    strcpy(newWord, manuelle);
+
+    // Insert the word into the dictionary tree
+    dicoInsererMot(newWord, &A, &queue);
+
+    // Insert the word into the dynamic array
+    char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
+    if (newMotArray == NULL)
+    {
+        printf("\nMemory reallocation error");
+        free(newWord);
+        break;
+    }
+
+    newMotArray[motCount] = newWord;
+    motArray = newMotArray;
+    motCount++;
+    dicoInsererMot(manuelle,&A,&queue);
+    printf("le nouveau dictionnaire ");
+    //afficherArbreBinaire(A);
+         for (int i = 0; i < motCount; i++)
+    {
+        printf("%s\n", motArray[i]);
+    }
+        printf("voulez vous ajouter d'autre mots manuellement ? \t '1' :oui  \t '0':non \n");
+     scanf("%d",&choix);}
 
 }
