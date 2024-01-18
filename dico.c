@@ -115,25 +115,26 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
 void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue)
 {
     if (*arbre != NULL)
-        /*si l'arbre n'est pas vide*/
+    /*si l'arbre n'est pas vide*/
     {
         if (mot[0] != '\0')
         /*on teste si la premiemre valeur egale au premier char de mot*/
-        {if ((*arbre)->val == mot[0])
+        {
+            if ((*arbre)->val == mot[0])
             {
                 /*si egale Incrémente la position du pointeur dans la chaîne de caractères mot. */
                 mot++;
 
-    /*et fait l'appelle recursive du fonction sur la fils gauche*/
+                /*et fait l'appelle recursive du fonction sur la fils gauche*/
                 dicoInsererMot(mot, &((*arbre)->FG), queue);
             }
             else
             {
                 /*si l'arbre a un fils droite on cherche le char*/
-                if ((*arbre)->FD != NULL){
-                        /*on fait l'appel recursive de la fonction sur la fils droite*/
-                        dicoInsererMot(mot, &((*arbre)->FD), queue);
-
+                if ((*arbre)->FD != NULL)
+                {
+                    /*on fait l'appel recursive de la fonction sur la fils droite*/
+                    dicoInsererMot(mot, &((*arbre)->FD), queue);
                 }
                 else
                 { /*si l'arbre vide on fait l'app au fonction arbreConNoeud pour on instialise l'arbre*/
@@ -145,19 +146,23 @@ void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue)
         /*si le mot n'est pas inserer dans l'arbre on fait l'appel au fonction arbreConNoeud  pour insialiser une mot dans une arbre*/
         else if ((*arbre)->val != '\0' && mot[0] == '\0')
         {
-                    ArbreBin *a = arbreConNoeud('\0', NULL, *arbre);
-                    *arbre = a;
+            ArbreBin *a = arbreConNoeud('\0', NULL, *arbre);
+            *arbre = a;
         }
     }
     else
-    {if (mot[0] != '\0')
-    /*si toute le mot n'est pas  inserer */
-        {/*on fait l'appel recursiv sur la fils gauche pour inserer les autres char*/
+    {
+        if (mot[0] != '\0')
+        /*si toute le mot n'est pas  inserer */
+        { /*on fait l'appel recursiv sur la fils gauche pour inserer les autres char*/
             *arbre = arbreConNoeud(mot[0], NULL, NULL);
             mot++;
-            dicoInsererMot(mot, &((*arbre)->FG),queue);
+            dicoInsererMot(mot, &((*arbre)->FG), queue);
         }
         /*sinon on insere /0 donc on a inserer tout les chars*/
-        else{*arbre = arbreConNoeud('\0', NULL, NULL);}
+        else
+        {
+            *arbre = arbreConNoeud('\0', NULL, NULL);
+        }
     }
 }

@@ -111,7 +111,7 @@ int hangman(char *mot, int maxTentatives)
         char lettre;
         printf("Devinez une lettre : ");
         scanf(" %c", &lettre);
-        lettre = tolower(lettre); // Convert to lowercase for case-insensitivity
+        lettre = tolower(lettre); // Convert to lowercase
 
         if (strchr(lettresDevinees, lettre) != NULL)
         {
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     // char *testing="";
     // int a=piocherMot(&testing);
     printf("voulez vous ajouter d'autre mots manuellement ? \n");
-    printf("1 :oui  \n 0:non \n");
+    printf("1 :oui  \t 0:non \n");
     scanf("%d", &choix);
     while (choix == 1)
     {
@@ -212,14 +212,24 @@ int main(int argc, char *argv[])
         scanf("%d", &choix);
     }
 
-    printf("jeux de hangmannn \n ");
-    char  l;
+    printf("\n\t Be aware you can be hanged!!.");
+    // Ascii Art
+    printf("       _                                             \n");
+    printf("      | |                                            \n");
+    printf("      | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  \n");
+    printf("      | '_ \\ / _` | '_ \\ / _` | '_ ` _ \\ / _` | '_ \\ \n");
+    printf("      | | | | (_| | | | | (_| | | | | | | (_| | | | | \n");
+    printf("      |_| |_|\\__,_|_| |_|\\__, |_| |_| |_|\\__,_|_| |_| \n");
+    printf("                          __/ |                      \n");
+    printf("                         |___/  \n");
+    printf("      ");
+    char l;
     char a[2];
     char *randomWord = motAleatoire(motArray, motCount);
     printf("Mot aleatoire : %s\n", randomWord);
     // Get the length of the random word
     int wordLength = strlen(randomWord);
-    // Print asterisks for each character in the word
+    // Print * for each character in the word
     for (int i = 0; i < wordLength; i++)
     {
         printf("*");
@@ -227,9 +237,9 @@ int main(int argc, char *argv[])
     printf("\n");
     printf("choisir le niveau de difficulté :");
     printf("e: easy ,m :medium , h: hard \n");
-scanf(" %1s", a); 
- switch (a[0])
-{
+    scanf(" %1s", a);
+    switch (a[0])
+    {
     case 'e':
         hangman(randomWord, 7);
         break;
@@ -242,5 +252,5 @@ scanf(" %1s", a);
     default:
         printf("Niveau de difficulté non reconnu.\n");
         break;
-}
+    }
 }
