@@ -31,9 +31,10 @@ char *motAleatoire(char **motArray, int motCount)
         // Invalid input or empty array
         return NULL;
     }
-
+    srand(time(NULL));
     // Generate a random index
     int randomIndex = rand() % motCount;
+    //printf("%d", randomIndex);
 
     // Return the word at the random index
     return motArray[randomIndex];
@@ -96,7 +97,7 @@ void afficherMot(char *mot, char *lettresDevinees)
     printf("\n");
 }
 
-int hangman(char *mot, int maxTentatives)
+int hangman(char *mot, int maxTentatives, char a)
 {
     char lettresDevinees[26] = {'\0'}; // Array to store guessed letters
     int tentatives = 0;
@@ -142,8 +143,46 @@ int hangman(char *mot, int maxTentatives)
         }
         else
         {
-            printf("Désolé, la lettre n'est pas dans le mot.\n");
-            tentatives++;
+            if (a == 'm')
+            {
+                printf("\033[H\033[J ┏━━━┓\n");
+                printf(" ┃   │\n");
+                printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
+                printf(" ┃  %c%s%c\n", tentatives < 3 ? ' ' : '/', tentatives < 2 ? " " : "│", tentatives < 4 ? ' ' : '\\');
+                printf(" ┃   %c\n", tentatives < 5 ? ' ' : '|');
+                printf(" ┃  %c %c\n", tentatives < 6 ? ' ' : '/', tentatives < 7 ? ' ' : '\\');
+                printf(" ┃\n");
+                printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
+                // printf("Désolé, la lettre n'est pas dans le mot.\n");
+                tentatives++;
+            }
+            if (a == 'h')
+            {
+                printf("\033[H\033[J ┏━━━┓\n");
+                printf(" ┃   %c\n", tentatives < 0 ? ' ' : 'O');
+                printf(" ┃  %c%s%c\n", tentatives < 2 ? ' ' : '/', tentatives < 1 ? " " : "│", tentatives < 3 ? ' ' : '\\');
+                printf(" ┃  %c %c\n", tentatives < 4 ? ' ' : '/', tentatives < 5 ? ' ' : '\\');
+                printf(" ┃\n");
+                printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
+                // printf("Désolé, la lettre n'est pas dans le mot.\n");
+                tentatives++;
+            }
+            if (a == 'e')
+            {
+                printf("\033[H\033[J ┏━━━┓\n");
+                printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
+                printf(" ┃  %c%s%c\n", tentatives < 3 ? ' ' : '/', tentatives < 2 ? " " : "│", tentatives < 4 ? ' ' : '\\');
+                printf(" ┃   %c\n", tentatives < 5 ? ' ' : '|');
+                printf(" ┃   %c\n", tentatives < 6 ? ' ' : '|');
+                printf(" ┃   %c\n", tentatives < 7 ? ' ' : '|');
+                printf(" ┃  %c %c\n", tentatives < 8 ? ' ' : '/', tentatives < 9 ? ' ' : '\\');
+                printf(" ┃\n");
+                printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
+                tentatives++;
+            }
+            // else {
+            //     printf("Désolé, la lettre n'est pas dans le mot.\n");
+            //                 tentatives++;}
         }
     }
 
@@ -225,6 +264,9 @@ int main(int argc, char *argv[])
     printf("      ");
     char l;
     char a[2];
+    printf("choisir le niveau de difficulté :");
+    printf("e: easy ,m :medium , h: hard \n");
+    scanf(" %1s", a);
     char *randomWord = motAleatoire(motArray, motCount);
     printf("Mot aleatoire : %s\n", randomWord);
     // Get the length of the random word
@@ -235,19 +277,16 @@ int main(int argc, char *argv[])
         printf("*");
     }
     printf("\n");
-    printf("choisir le niveau de difficulté :");
-    printf("e: easy ,m :medium , h: hard \n");
-    scanf(" %1s", a);
     switch (a[0])
     {
     case 'e':
-        hangman(randomWord, 7);
+        hangman(randomWord, 10, 'e');
         break;
     case 'm':
-        hangman(randomWord, 5);
+        hangman(randomWord, 8, 'm');
         break;
     case 'h':
-        hangman(randomWord, 3);
+        hangman(randomWord, 6, 'h');
         break;
     default:
         printf("Niveau de difficulté non reconnu.\n");
