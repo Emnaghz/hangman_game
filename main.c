@@ -5,7 +5,7 @@
 #include "listes.h"
 #include "arbres.h"
 #include "dico.c"
-
+#include <stdlib.h>
 ArbreBin *exempleArbre()
 {
     // 0              a
@@ -24,10 +24,25 @@ ArbreBin *exempleArbre()
     return A;
 }
 
+char *motAleatoire(char **motArray, int motCount)
+{
+    if (motCount <= 0 || motArray == NULL)
+    {
+        // Invalid input or empty array
+        return NULL;
+    }
+
+    // Generate a random index
+    int randomIndex = rand() % motCount;
+
+    // Return the word at the random index
+    return motArray[randomIndex];
+}
+
 void arbres()
 {
     ArbreBin *A = exempleArbre();
-    QueueNode *queue = NULL; 
+    QueueNode *queue = NULL;
     generateMermaidScript(A);
 
     // Liste *L=initListe();
@@ -65,63 +80,159 @@ void arbres()
     // afficherArbreBinaire(rechercheArbreBin2(A, entree));
     // libererArbre(A);
 }
+void afficherMot(char *mot, char *lettresDevinees)
+{
+    for (int i = 0; i < strlen(mot); i++)
+    {
+        if (strchr(lettresDevinees, mot[i]) != NULL)
+        {
+            printf("%c ", mot[i]);
+        }
+        else
+        {
+            printf("* ");
+        }
+    }
+    printf("\n");
+}
+
+int hangman(char *mot, int maxTentatives)
+{
+    char lettresDevinees[26] = {'\0'}; // Array to store guessed letters
+    int tentatives = 0;
+
+    printf("Bienvenue dans le jeu du Pendu !\n");
+
+    while (tentatives < maxTentatives)
+    {
+        printf("\nTentative %d/%d\n", tentatives + 1, maxTentatives);
+        afficherMot(mot, lettresDevinees);
+
+        char lettre;
+        printf("Devinez une lettre : ");
+        scanf(" %c", &lettre);
+        lettre = tolower(lettre); // Convert to lowercase for case-insensitivity
+
+        if (strchr(lettresDevinees, lettre) != NULL)
+        {
+            printf("Vous avez déjà deviné cette lettre. Essayez encore.\n");
+            continue;
+        }
+
+        lettresDevinees[strlen(lettresDevinees)] = lettre;
+
+        if (strchr(mot, lettre) != NULL)
+        {
+            printf("Bonne devinette !\n");
+            int motComplet = 1;
+            for (int i = 0; i < strlen(mot); i++)
+            {
+                if (strchr(lettresDevinees, mot[i]) == NULL)
+                {
+                    motComplet = 0;
+                    break;
+                }
+            }
+
+            if (motComplet)
+            {
+                printf("Félicitations ! Vous avez deviné le mot : %s\n", mot);
+                return 1;
+            }
+        }
+        else
+        {
+            printf("Désolé, la lettre n'est pas dans le mot.\n");
+            tentatives++;
+        }
+    }
+
+    printf("Dommage ! Vous n'avez pas réussi à deviner le mot. Le mot était : %s\n", mot);
+    return 0;
+}
 
 int main(int argc, char *argv[])
-{char manuelle[100];
+{
+    char manuelle[100];
     arbres();
     int choix;
-        ArbreBin *A =NULL;
-        char **motArray = NULL;
+    ArbreBin *A = NULL;
+    char **motArray = NULL;
     int motCount = 0;
-        creerDictionnaire(&A,&motArray,&motCount);
+    creerDictionnaire(&A, &motArray, &motCount);
     QueueNode *queue = NULL;
-        // afficherArbreBinaire(A);
-        for (int i = 0; i < motCount; i++)
+    // afficherArbreBinaire(A);
+    for (int i = 0; i < motCount; i++)
     {
         printf("%s\n", motArray[i]);
     }
     // char *testing="";
     // int a=piocherMot(&testing);
     printf("voulez vous ajouter d'autre mots manuellement ? \n");
-     printf("1 :oui  \n 0:non \n");
-    scanf("%d",&choix);
-        while(choix==1){
+    printf("1 :oui  \n 0:non \n");
+    scanf("%d", &choix);
+    while (choix == 1)
+    {
         printf("donner le mot a inserer ");
-    scanf("%s",manuelle);
-      // Allocate memory for the new word in the dynamic array
-    char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
-    if (newWord == NULL)
-    {
-        printf("\nMemory allocation error");
-        break;
-    }
+        scanf("%s", manuelle);
+        // Allocate memory for the new word in the dynamic array
+        char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
+        if (newWord == NULL)
+        {
+            printf("\nMemory allocation error");
+            break;
+        }
 
-    // Copy the manually entered word to the new memory
-    strcpy(newWord, manuelle);
+        // Copy the manually entered word to the new memory
+        strcpy(newWord, manuelle);
 
-    // Insert the word into the dictionary tree
-    dicoInsererMot(newWord, &A, &queue);
+        // Insert the word into the dictionary tree
+        dicoInsererMot(newWord, &A, &queue);
 
-    // Insert the word into the dynamic array
-    char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
-    if (newMotArray == NULL)
-    {
-        printf("\nMemory reallocation error");
-        free(newWord);
-        break;
-    }
+        // Insert the word into the dynamic array
+        char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
+        if (newMotArray == NULL)
+        {
+            printf("\nMemory reallocation error");
+            free(newWord);
+            break;
+        }
 
-    newMotArray[motCount] = newWord;
-    motArray = newMotArray;
-    motCount++;
-    dicoInsererMot(manuelle,&A,&queue);
-    printf("le nouveau dictionnaire ");
-    //afficherArbreBinaire(A);
-         for (int i = 0; i < motCount; i++)
-    {
-        printf("%s\n", motArray[i]);
-    }
+        newMotArray[motCount] = newWord;
+        motArray = newMotArray;
+        motCount++;
+        dicoInsererMot(manuelle, &A, &queue);
+        printf("le nouveau dictionnaire ");
+        // afficherArbreBinaire(A);
+        for (int i = 0; i < motCount; i++)
+        {
+            printf("%s\n", motArray[i]);
+        }
         printf("voulez vous ajouter d'autre mots manuellement ? \t '1' :oui  \t '0':non \n");
-     scanf("%d",&choix);}
+        scanf("%d", &choix);
+    }
+
+    printf("jeux de hangmannn \n ");
+    char a,l ;
+    char *randomWord = motAleatoire(motArray, motCount);
+    printf("Mot aleatoire : %s\n", randomWord);
+    // printf("choisir le niveau de difficulté");
+    //  printf("e: easy ,m :medium , h: hard \n");
+     scanf("%c",a);
+     // Get the length of the random word
+        int wordLength = strlen(randomWord);
+        // Print asterisks for each character in the word
+        for (int i = 0; i < wordLength; i++)
+        {
+            printf("*");
+        }
+        printf("\n");
+        hangman(randomWord,5);
+
+
+
+
+
+
 
 }
