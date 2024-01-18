@@ -213,26 +213,34 @@ int main(int argc, char *argv[])
     }
 
     printf("jeux de hangmannn \n ");
-    char a,l ;
+    char  l;
+    char a[2];
     char *randomWord = motAleatoire(motArray, motCount);
     printf("Mot aleatoire : %s\n", randomWord);
-    // printf("choisir le niveau de difficulté");
-    //  printf("e: easy ,m :medium , h: hard \n");
-     scanf("%c",a);
-     // Get the length of the random word
-        int wordLength = strlen(randomWord);
-        // Print asterisks for each character in the word
-        for (int i = 0; i < wordLength; i++)
-        {
-            printf("*");
-        }
-        printf("\n");
-        hangman(randomWord,5);
-
-
-
-
-
-
-
+    // Get the length of the random word
+    int wordLength = strlen(randomWord);
+    // Print asterisks for each character in the word
+    for (int i = 0; i < wordLength; i++)
+    {
+        printf("*");
+    }
+    printf("\n");
+    printf("choisir le niveau de difficulté :");
+    printf("e: easy ,m :medium , h: hard \n");
+scanf(" %1s", a); 
+ switch (a[0])
+{
+    case 'e':
+        hangman(randomWord, 7);
+        break;
+    case 'm':
+        hangman(randomWord, 5);
+        break;
+    case 'h':
+        hangman(randomWord, 3);
+        break;
+    default:
+        printf("Niveau de difficulté non reconnu.\n");
+        break;
+}
 }
