@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
-    generateMermaidScript(A);
+    //generateMermaidScript(A);
     QueueNode *queue = NULL;
     // afficherArbreBinaire(A);
     for (int i = 0; i < motCount; i++)
@@ -283,14 +283,14 @@ int main(int argc, char *argv[])
         motCount++;
         dicoInsererMot(manuelle, &A, &queue);
         printf("le nouveau dictionnaire ");
-        generateMermaidScript(A);
         // afficherArbreBinaire(A);
         for (int i = 0; i < motCount; i++)
-        {
-            printf("%s\n", motArray[i]);
-        }
+        {    printf("%s\n", motArray[i]); }
         printf("voulez vous ajouter d'autre mots manuellement ? \t '1' :oui  \t '0':non \n");
         scanf("%d", &choix);
+        if(choix==0)
+        generateMermaidScript(A);
+
     }
 
     printf("\n\t Be aware you can be hanged!!.");
