@@ -239,6 +239,7 @@ int main(int argc, char *argv[])
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
+    generateMermaidScript(A);
     QueueNode *queue = NULL;
     // afficherArbreBinaire(A);
     for (int i = 0; i < motCount; i++)
@@ -282,6 +283,7 @@ int main(int argc, char *argv[])
         motCount++;
         dicoInsererMot(manuelle, &A, &queue);
         printf("le nouveau dictionnaire ");
+        generateMermaidScript(A);
         // afficherArbreBinaire(A);
         for (int i = 0; i < motCount; i++)
         {

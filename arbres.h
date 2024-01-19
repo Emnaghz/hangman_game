@@ -492,20 +492,30 @@ void libererArbre(ArbreBin *P)
 }
 void generateMermaidNodes(ArbreBin *node, FILE *file)
 {
-    if (node != NULL) {
+    if (node != NULL)
+    {
         // Assign a unique name to each node
-        fprintf(file, "  %p[%c]\n", (void *)node, node->val);
+        if (node->val == '\00')
+        {
+            fprintf(file, "  %p[%c]\n", (void *)node, '-');
+        }
+        else
+        {
+            fprintf(file, "  %p[%c]\n", (void *)node, node->val);
+        }
 
-        if (node->FG != NULL) {
+        if (node->FG != NULL)
+        {
             fprintf(file, "  %p --> %p\n", (void *)node, (void *)node->FG);
             fprintf(file, "  style %p fill:#ffaaaa,color:#000000;  \n", (void *)node->FG);
             generateMermaidNodes(node->FG, file);
         }
 
-        if (node->FD != NULL) {
+        if (node->FD != NULL)
+        {
             fprintf(file, "  %p --> %p\n", (void *)node, (void *)node->FD);
             fprintf(file, "  style %p fill:#aaaaff,color:#000000;  \n", (void *)node->FD);
-            
+
             generateMermaidNodes(node->FD, file);
         }
     }
@@ -519,15 +529,16 @@ void generateMermaidScript(ArbreBin *root)
         return;
     }
 
-    fprintf(file,"```mermaid \n graph TD;\n");
-    generateMermaidNodes(root,file);
+    fprintf(file, "```mermaid \n graph TD;\n");
+    generateMermaidNodes(root, file);
     fclose(file);
-
 }
 
-ArbreBin* arbreConNoeud(char val, ArbreBin *FG, ArbreBin *FD) {
-    ArbreBin *nouveauNoeud = (ArbreBin*)malloc(sizeof(ArbreBin));
-    if (nouveauNoeud != NULL) {
+ArbreBin *arbreConNoeud(char val, ArbreBin *FG, ArbreBin *FD)
+{
+    ArbreBin *nouveauNoeud = (ArbreBin *)malloc(sizeof(ArbreBin));
+    if (nouveauNoeud != NULL)
+    {
         nouveauNoeud->val = val;
         nouveauNoeud->FG = FG;
         nouveauNoeud->FD = FD;
