@@ -49,7 +49,6 @@ void arbres()
     ArbreBin *A = exempleArbre();
     QueueNode *queue = NULL;
     generateMermaidScript(A);
-
     // Liste *L=initListe();
 
     // ArbreBin *dictionnaire = genererABR();
@@ -239,21 +238,33 @@ int main(int argc, char *argv[])
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
-    //generateMermaidScript(A);
     QueueNode *queue = NULL;
-    // afficherArbreBinaire(A);
     for (int i = 0; i < motCount; i++)
     {
         printf("%s\n", motArray[i]);
     }
-    // char *testing="";
-    // int a=piocherMot(&testing);
-    printf("voulez vous ajouter d'autre mots manuellement ? \n");
-    printf("1 :oui  \t 0:non \n");
-    scanf("%d", &choix);
-    while (choix == 1)
-    {
-        printf("donner le mot a inserer ");
+// Display menu
+printf("\n===========================\n");
+printf("           Menu\n");
+printf("===========================\n");
+printf("1. Ajouter un mot\n");
+printf("2. Visualiser l'arbre\n");
+printf("3. Rechercher un mot\n");
+printf("4. Supprimer un mot\n");
+printf("5. Visualiser les caractéristiques du dictionnaire\n");
+printf("6. Jouer au Pendu\n");
+printf("0. Quitter\n");
+printf("===========================\n");
+
+        // Get user choice
+        printf("Choix: ");
+        scanf("%d", &choix);
+
+        //Perform action based on user choice
+        switch (choix)
+        {
+         case 1:
+          printf("donner le mot a inserer ");
         scanf("%s", manuelle);
         // Allocate memory for the new word in the dynamic array
         char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
@@ -286,13 +297,21 @@ int main(int argc, char *argv[])
         // afficherArbreBinaire(A);
         for (int i = 0; i < motCount; i++)
         {    printf("%s\n", motArray[i]); }
-        printf("voulez vous ajouter d'autre mots manuellement ? \t '1' :oui  \t '0':non \n");
-        scanf("%d", &choix);
-        if(choix==0)
-        generateMermaidScript(A);
-
-    }
-
+        // ajouterMot(&A, &motArray, &motCount);
+              break;
+        case 2:
+            generateMermaidScript(A);
+            break;
+        // case 3:
+        //     rechercherMot();
+        //     break;
+        // case 4:
+        //     supprimerMot();
+        //     break;
+        // case 5:
+        //     visualiserCaracteristiquesDictionnaire();
+        //     break;
+         case 6:
     printf("\n\t Be aware you can be hanged!!.");
     // Ascii Art
     printf("       _                                             \n");
@@ -328,4 +347,5 @@ int main(int argc, char *argv[])
         printf("Niveau de difficulté non reconnu.\n");
         break;
     }
+}
 }
