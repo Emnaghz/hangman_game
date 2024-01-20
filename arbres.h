@@ -551,18 +551,39 @@ void construireSousArbre(ArbreBin *A, ArbreBin **res, char *mot)
 {
     if (A)
     {
-        *res=creerFeuille(A->val);
+        *res = creerFeuille(A->val);
         if (A->val < mot[0])
         {
             construireSousArbre(A->FD, &((*res)->FD), mot);
         }
-        else{
+        else
+        {
             mot++;
             construireSousArbre(A->FG, &((*res)->FG), mot);
         }
     }
 }
-
+// as simple as that
+void motDelArbre(char *mot, ArbreBin *A)
+{
+    if (A)
+    {
+        if (A->FG)
+        {
+            printf("\n %c ", A->val);
+            *mot = A->val;
+            motDelArbre(mot+1, A->FG);
+        }
+        else
+        {
+            motDelArbre(mot, A->FD);
+        }
+    }
+    else
+    {
+        *mot='\0';
+    };
+}
 ArbreBin *sousArbreDeRecherche(char *mot)
 {
     ArbreBin *A = NULL;
@@ -571,7 +592,10 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     creerDictionnaire(&A, &motArray, &motCount);
     generateMermaidScript(A, "mermaid.md");
     ArbreBin *res = initArbreBin();
-    construireSousArbre(A,&res,mot);
+    construireSousArbre(A, &res, mot);
     generateMermaidScript(res, "subtree.md");
-
+    char resultat[10];
+   
+    motDelArbre(resultat, res);
+    printf("le mot est %s \n", resultat);
 }

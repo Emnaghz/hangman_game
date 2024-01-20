@@ -13,6 +13,6 @@
 
 int main(int argc, char *argv[])
 {
-    sousArbreDeRecherche("chat\0");
+    sousArbreDeRecherche("chat");
     
 }

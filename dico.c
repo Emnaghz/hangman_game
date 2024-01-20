@@ -111,7 +111,6 @@ void sortDictionary()
     if (file == NULL)
     {
         printf("Error opening the file for writing.\n");
-        // Handle the error appropriately
         return;
     }
 
