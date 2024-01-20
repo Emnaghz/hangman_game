@@ -520,9 +520,9 @@ void generateMermaidNodes(ArbreBin *node, FILE *file)
         }
     }
 }
-void generateMermaidScript(ArbreBin *root)
+void generateMermaidScript(ArbreBin *root, char *filename)
 {
-    FILE *file = fopen("mermaid.md", "w");
+    FILE *file = fopen(filename, "w");
 
     if (root == NULL)
     {
@@ -545,11 +545,33 @@ ArbreBin *arbreConNoeud(char val, ArbreBin *FG, ArbreBin *FD)
     }
     return nouveauNoeud;
 }
-void sousArbreDeRecherche(){
+
+// construire le sous arbre de recherche du mot à deviner
+void construireSousArbre(ArbreBin *A, ArbreBin **res, char *mot)
+{
+    if (A)
+    {
+        *res=creerFeuille(A->val);
+        if (A->val < mot[0])
+        {
+            construireSousArbre(A->FD, &((*res)->FD), mot);
+        }
+        else{
+            mot++;
+            construireSousArbre(A->FG, &((*res)->FG), mot);
+        }
+    }
+}
+
+ArbreBin *sousArbreDeRecherche(char *mot)
+{
     ArbreBin *A = NULL;
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
-    generateMermaidScript(A);
-    // printf("that val is %d and %d",A->FD->FD->FG->FG->FD->FG->val,A->FD->FD->FG->FG->FD->FG->val=='\r');
+    generateMermaidScript(A, "mermaid.md");
+    ArbreBin *res = initArbreBin();
+    construireSousArbre(A,&res,mot);
+    generateMermaidScript(res, "subtree.md");
+
 }

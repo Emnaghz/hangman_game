@@ -13,7 +13,6 @@
 
 int main(int argc, char *argv[])
 {
-    printf("this should work");
-    sousArbreDeRecherche();
+    sousArbreDeRecherche("chat\0");
     
 }
