@@ -239,10 +239,6 @@ int main(int argc, char *argv[])
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
     QueueNode *queue = NULL;
-    for (int i = 0; i < motCount; i++)
-    {
-        printf("%s\n", motArray[i]);
-    }
 // Display menu
 printf("\n===========================\n");
 printf("           Menu\n");
@@ -255,7 +251,6 @@ printf("5. Visualiser les caractéristiques du dictionnaire\n");
 printf("6. Jouer au Pendu\n");
 printf("0. Quitter\n");
 printf("===========================\n");
-
         // Get user choice
         printf("Choix: ");
         scanf("%d", &choix);
@@ -265,7 +260,8 @@ printf("===========================\n");
         {
          case 1:
           printf("donner le mot a inserer ");
-        scanf("%s", manuelle);
+          scanf("%s", manuelle);
+           printf("test0 %d \n",motCount);
         // Allocate memory for the new word in the dynamic array
         char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
         if (newWord == NULL)
@@ -273,13 +269,13 @@ printf("===========================\n");
             printf("\nMemory allocation error");
             break;
         }
-
         // Copy the manually entered word to the new memory
         strcpy(newWord, manuelle);
+        addToDictionary(manuelle);
 
         // Insert the word into the dictionary tree
         dicoInsererMot(newWord, &A, &queue);
-
+        printf("\n insertion terminé \n");
         // Insert the word into the dynamic array
         char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
         if (newMotArray == NULL)
@@ -292,12 +288,6 @@ printf("===========================\n");
         newMotArray[motCount] = newWord;
         motArray = newMotArray;
         motCount++;
-        dicoInsererMot(manuelle, &A, &queue);
-        printf("le nouveau dictionnaire ");
-        // afficherArbreBinaire(A);
-        for (int i = 0; i < motCount; i++)
-        {    printf("%s\n", motArray[i]); }
-        // ajouterMot(&A, &motArray, &motCount);
               break;
         case 2:
             generateMermaidScript(A);
