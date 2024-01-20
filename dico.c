@@ -24,7 +24,7 @@ int piocherMot(char *motPioche)
         if (caractereLu == '\n')
             nombreMots++;
     } while (caractereLu != EOF);
-    numMotChoisi = nombreAleatoire(nombreMots); // On pioche un mot au hasard                                          // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon mot
+    numMotChoisi = nombreAleatoire(0,nombreMots); // On pioche un mot au hasard                                          // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon mot
     printf("\n le num choisi est %d: \n", numMotChoisi);
     rewind(dico);
     while (numMotChoisi > 0)
@@ -45,24 +45,15 @@ int piocherMot(char *motPioche)
     fclose(dico);
     return 1; // Tout s'est bien passé, on retourne 1
 }
-void removeNewline(char *str) {
-    // Remove newline character if present
-    char *newline = strchr(str, '\n');
-    if (newline != NULL) {
-        *newline = '\0';
-    }
-}
-
-int nombreAleatoire(int nombreMax)
+int nombreAleatoire(int nombreMin,int nombreMax)
 {
     srand(time(NULL));
-    return (rand() % nombreMax);
+    return (rand() % (nombreMax - nombreMin + 1)) + nombreMin;
 }
 int compareStrings(const void *a, const void *b)
 {
     return strcmp(*(const char **)a, *(const char **)b);
 }
-
 void sortDictionary()
 {
     FILE *file = fopen("dictionnaire.txt", "r");
@@ -141,10 +132,11 @@ void addToDictionary(const char *word)
         printf("Error opening the file for writing.\n");
         // Handle the error appropriately
     }
-     sortDictionary() ;
+    sortDictionary();
 }
 void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue)
-{   if (*arbre != NULL)
+{
+    if (*arbre != NULL)
     /*si l'arbre n'est pas vide*/
     {
         if (mot[0] != '\0')
@@ -182,22 +174,21 @@ void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue)
     }
     else
     {
-        if (mot[0] != '\0' && mot[0]!='\r')
+        if (mot[0] != '\0' && mot[0] != '\r')
         /*si toute le mot n'est pas  inserer */
         { /*on fait l'appel recursiv sur la fils gauche pour inserer les autres char*/
             *arbre = arbreConNoeud(mot[0], NULL, NULL);
             mot++;
             dicoInsererMot(mot, &((*arbre)->FG), queue);
         }
-      
+
         /*sinon on insere /0 donc on a inserer tout les chars*/
         else
         {
             *arbre = arbreConNoeud('\0', NULL, NULL);
         }
-} 
+    }
 }
-
 void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
 {
     FILE *dico = fopen("dictionnaire.txt", "r");
@@ -257,8 +248,5 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
     }
 
     fclose(dico);
-  sortDictionary() ; 
+    sortDictionary();
 }
-
-
-

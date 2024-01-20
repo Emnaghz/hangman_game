@@ -9,6 +9,7 @@ cheminee
 chocolat
 domino
 finlande
+fraction
 hello
 hey
 maman
