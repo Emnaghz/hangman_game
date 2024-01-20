@@ -142,7 +142,7 @@ int hangman(char *mot, int maxTentatives, char a)
 
         if (strchr(mot, lettre) != NULL)
         {
-            
+
             printf("Bonne devinette !\n");
             int motComplet = 1;
             for (int i = 0; i < strlen(mot); i++)
@@ -172,7 +172,7 @@ int hangman(char *mot, int maxTentatives, char a)
         else
         {
             if (a == 'm')
-            {   
+            {
                 printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   │\n");
@@ -182,7 +182,7 @@ int hangman(char *mot, int maxTentatives, char a)
                 printf(" ┃  %c %c\n", tentatives < 6 ? ' ' : '/', tentatives < 7 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                //printf("Désolé, la lettre %c n'est pas dans le mot.\n", lettre);
+                // printf("Désolé, la lettre %c n'est pas dans le mot.\n", lettre);
                 tentatives++;
             }
             if (a == 'h')
@@ -194,7 +194,7 @@ int hangman(char *mot, int maxTentatives, char a)
                 printf(" ┃  %c %c\n", tentatives < 4 ? ' ' : '/', tentatives < 5 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                //printf("Désolé, la lettre n'est pas dans le mot.\n");
+                // printf("Désolé, la lettre n'est pas dans le mot.\n");
                 tentatives++;
             }
             if (a == 'e')
@@ -239,29 +239,29 @@ int main(int argc, char *argv[])
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
     QueueNode *queue = NULL;
-// Display menu
-printf("\n===========================\n");
-printf("           Menu\n");
-printf("===========================\n");
-printf("1. Ajouter un mot\n");
-printf("2. Visualiser l'arbre\n");
-printf("3. Rechercher un mot\n");
-printf("4. Supprimer un mot\n");
-printf("5. Visualiser les caractéristiques du dictionnaire\n");
-printf("6. Jouer au Pendu\n");
-printf("0. Quitter\n");
-printf("===========================\n");
-        // Get user choice
-        printf("Choix: ");
-        scanf("%d", &choix);
+    // Display menu
+    printf("\n===========================\n");
+    printf("           Menu\n");
+    printf("===========================\n");
+    printf("1. Ajouter un mot\n");
+    printf("2. Visualiser l'arbre\n");
+    printf("3. Rechercher un mot\n");
+    printf("4. Supprimer un mot\n");
+    printf("5. Visualiser les caractéristiques du dictionnaire\n");
+    printf("6. Jouer au Pendu\n");
+    printf("0. Quitter\n");
+    printf("===========================\n");
+    // Get user choice
+    printf("Choix: ");
+    scanf("%d", &choix);
 
-        //Perform action based on user choice
-        switch (choix)
-        {
-         case 1:
-          printf("donner le mot a inserer ");
-          scanf("%s", manuelle);
-           printf("test0 %d \n",motCount);
+    // Perform action based on user choice
+    switch (choix)
+    {
+    case 1:
+        printf("donner le mot a inserer ");
+        scanf("%s", manuelle);
+        printf("test0 %d \n", motCount);
         // Allocate memory for the new word in the dynamic array
         char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
         if (newWord == NULL)
@@ -288,10 +288,10 @@ printf("===========================\n");
         newMotArray[motCount] = newWord;
         motArray = newMotArray;
         motCount++;
-              break;
-        case 2:
-            generateMermaidScript(A);
-            break;
+        break;
+    case 2:
+        generateMermaidScript(A);
+        break;
         // case 3:
         //     rechercherMot();
         //     break;
@@ -301,41 +301,41 @@ printf("===========================\n");
         // case 5:
         //     visualiserCaracteristiquesDictionnaire();
         //     break;
-         case 6:
-    printf("\n\t Be aware you can be hanged!!.");
-    // Ascii Art
-    printf("       _                                             \n");
-    printf("      | |                                            \n");
-    printf("      | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  \n");
-    printf("      | '_ \\ / _` | '_ \\ / _` | '_ ` _ \\ / _` | '_ \\ \n");
-    printf("      | | | | (_| | | | | (_| | | | | | | (_| | | | | \n");
-    printf("      |_| |_|\\__,_|_| |_|\\__, |_| |_| |_|\\__,_|_| |_| \n");
-    printf("                          __/ |                      \n");
-    printf("                         |___/  \n");
-    printf("      ");
-    char l;
-    char a[2];
-    printf("choisir le niveau de difficulté :");
-    printf("e: easy ,m :medium , h: hard \n");
-    scanf(" %1s", a);
-    char *randomWord = motAleatoire(motArray, motCount);
-    // printf("Mot aleatoire : %s\n", randomWord);
+    case 6:
+        printf("\n\t Be aware you can be hanged!!.");
+        // Ascii Art
+        printf("       _                                             \n");
+        printf("      | |                                            \n");
+        printf("      | |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  \n");
+        printf("      | '_ \\ / _` | '_ \\ / _` | '_ ` _ \\ / _` | '_ \\ \n");
+        printf("      | | | | (_| | | | | (_| | | | | | | (_| | | | | \n");
+        printf("      |_| |_|\\__,_|_| |_|\\__, |_| |_| |_|\\__,_|_| |_| \n");
+        printf("                          __/ |                      \n");
+        printf("                         |___/  \n");
+        printf("      ");
+        char l;
+        char a[2];
+        printf("choisir le niveau de difficulté :");
+        printf("e: easy ,m :medium , h: hard \n");
+        scanf(" %1s", a);
+        char *randomWord = motAleatoire(motArray, motCount);
+        // printf("Mot aleatoire : %s\n", randomWord);
 
-    printf("\n");
-    switch (a[0])
-    {
-    case 'e':
-        hangman(randomWord, 10, 'e');
-        break;
-    case 'm':
-        hangman(randomWord, 8, 'm');
-        break;
-    case 'h':
-        hangman(randomWord, 6, 'h');
-        break;
-    default:
-        printf("Niveau de difficulté non reconnu.\n");
-        break;
+        printf("\n");
+        switch (a[0])
+        {
+        case 'e':
+            hangman(randomWord, 10, 'e');
+            break;
+        case 'm':
+            hangman(randomWord, 8, 'm');
+            break;
+        case 'h':
+            hangman(randomWord, 6, 'h');
+            break;
+        default:
+            printf("Niveau de difficulté non reconnu.\n");
+            break;
+        }
     }
-}
 }

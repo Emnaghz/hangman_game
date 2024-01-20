@@ -183,13 +183,14 @@ void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue)
     }
     else
     {
-        if (mot[0] != '\0')
+        if (mot[0] != '\0' && mot[0]!='\r')
         /*si toute le mot n'est pas  inserer */
         { /*on fait l'appel recursiv sur la fils gauche pour inserer les autres char*/
             *arbre = arbreConNoeud(mot[0], NULL, NULL);
             mot++;
             dicoInsererMot(mot, &((*arbre)->FG), queue);
         }
+      
         /*sinon on insere /0 donc on a inserer tout les chars*/
         else
         {

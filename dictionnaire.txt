@@ -4,6 +4,7 @@ bonjour
 cacao
 cas
 chat
+chaton
 cheminee
 chocolat
 domino

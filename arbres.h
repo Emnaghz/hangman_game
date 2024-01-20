@@ -164,77 +164,77 @@ int nombreFeuilles(ArbreBin *A)
             return nombreFeuilles(A->FG) + nombreFeuilles(A->FD);
     }
 }
-void afficherArbreBinaire(ArbreBin *A)
-{
-    if (A)
-    {
-        int hauteur = hauteurArbreRecur(A);
+// void afficherArbreBinaire(ArbreBin *A)
+// {
+//     if (A)
+//     {
+//         int hauteur = hauteurArbreRecur(A);
 
-        Queue *file = createQueue();
-        ArbreBin *delim = initArbreBin();
-        ArbreBin *blank = creerFeuille('-');
+//         Queue *file = createQueue();
+//         ArbreBin *delim = initArbreBin();
+//         ArbreBin *blank = creerFeuille('-');
 
-        enqueue(file, A);
-        enqueue(file, delim);
-        int niveau = 0;
-        while (!fileEstVide(file))
-        {
-            ArbreBin *currentArbre = dequeue(file);
-            if (currentArbre != NULL)
-            {
-                double what = pow(2, hauteur - niveau);
-                int espaces = (int)what - 1;
-                for (int i = 0; i < espaces; i++)
-                {
-                    printf(" ");
-                }
-                if (currentArbre->val == '\0')
-                {
-                    printf(" 0 ");
-                }
-                else
-                {
-                    printf(" %c ", currentArbre->val);
-                }
-                for (int i = 0; i < espaces; i++)
-                {
-                    printf(" ");
-                }
-                if (currentArbre->FG != NULL)
-                {
-                    enqueue(file, currentArbre->FG);
-                    if (!currentArbre->FD)
-                    {
-                        enqueue(file, blank);
-                    }
-                }
-                if (currentArbre->FD != NULL)
-                {
-                    if (!currentArbre->FG)
-                    {
-                        enqueue(file, blank);
-                    }
-                    enqueue(file, currentArbre->FD);
-                }
-                if (currentArbre->val != '-' && !currentArbre->FG && !currentArbre->FD)
-                {
-                    enqueue(file, blank);
-                    enqueue(file, blank);
-                }
-            }
-            else
-            {
-                printf("\n");
-                niveau++;
-                if (!fileEstVide(file))
-                {
-                    enqueue(file, delim);
-                }
-            }
-        }
-    }
-    printf("\n");
-}
+//         enqueue(file, A);
+//         enqueue(file, delim);
+//         int niveau = 0;
+//         while (!fileEstVide(file))
+//         {
+//             ArbreBin *currentArbre = dequeue(file);
+//             if (currentArbre != NULL)
+//             {
+//                 double what = pow(2, hauteur - niveau);
+//                 int espaces = (int)what - 1;
+//                 for (int i = 0; i < espaces; i++)
+//                 {
+//                     printf(" ");
+//                 }
+//                 if (currentArbre->val == '\0')
+//                 {
+//                     printf(" 0 ");
+//                 }
+//                 else
+//                 {
+//                     printf(" %c ", currentArbre->val);
+//                 }
+//                 for (int i = 0; i < espaces; i++)
+//                 {
+//                     printf(" ");
+//                 }
+//                 if (currentArbre->FG != NULL)
+//                 {
+//                     enqueue(file, currentArbre->FG);
+//                     if (!currentArbre->FD)
+//                     {
+//                         enqueue(file, blank);
+//                     }
+//                 }
+//                 if (currentArbre->FD != NULL)
+//                 {
+//                     if (!currentArbre->FG)
+//                     {
+//                         enqueue(file, blank);
+//                     }
+//                     enqueue(file, currentArbre->FD);
+//                 }
+//                 if (currentArbre->val != '-' && !currentArbre->FG && !currentArbre->FD)
+//                 {
+//                     enqueue(file, blank);
+//                     enqueue(file, blank);
+//                 }
+//             }
+//             else
+//             {
+//                 printf("\n");
+//                 niveau++;
+//                 if (!fileEstVide(file))
+//                 {
+//                     enqueue(file, delim);
+//                 }
+//             }
+//         }
+//     }
+//     printf("\n");
+// }
 void parcoursInfixe(ArbreBin *A)
 {
     if (A)
@@ -544,4 +544,12 @@ ArbreBin *arbreConNoeud(char val, ArbreBin *FG, ArbreBin *FD)
         nouveauNoeud->FD = FD;
     }
     return nouveauNoeud;
+}
+void sousArbreDeRecherche(){
+    ArbreBin *A = NULL;
+    char **motArray = NULL;
+    int motCount = 0;
+    creerDictionnaire(&A, &motArray, &motCount);
+    generateMermaidScript(A);
+    // printf("that val is %d and %d",A->FD->FD->FG->FG->FD->FG->val,A->FD->FD->FG->FG->FD->FG->val=='\r');
 }
