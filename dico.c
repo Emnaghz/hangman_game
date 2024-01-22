@@ -287,15 +287,13 @@ void visualiserCaracteristiquesDictionnaire() {
 
     double average_length = total_characters / (double)total_words;
 
-    // Customize each line separately
     printf("\nStatistiques du dictionnaire :\n");
     printf("==============================\n");
-    printf("Nombre total de mots           : \x1b[32m%d\x1b[0m\n", total_words);  // Green color
-    printf("Longueur moyenne des mots      : \x1b[34m%.2f\x1b[0m caractères\n", average_length);  // Blue color
-    printf("Longueur du mot le plus court  : \x1b[31m%d\x1b[0m caractères\n", shortest_length);  // Red color
-    printf("Longueur du mot le plus long   : \x1b[33m%d\x1b[0m caractères\n", longest_length);  // Yellow color
+    printf("Nombre total de mots           : \x1b[32m%d\x1b[0m\n", total_words); 
+    printf("Longueur moyenne des mots      : \x1b[34m%.2f\x1b[0m caractères\n", average_length);
+    printf("Longueur du mot le plus court  : \x1b[31m%d\x1b[0m caractères\n", shortest_length);
+    printf("Longueur du mot le plus long   : \x1b[33m%d\x1b[0m caractères\n", longest_length);
 
-    // Additional statistics
     printf("\nNombre de mots par longueur   :\n");
     for (int i = 0; i < 20; i++) {
         if( word_count_by_length[i] != 0)
@@ -308,12 +306,10 @@ void visualiserCaracteristiquesDictionnaire() {
     printf("\nVoulez-vous rechercher un mot spécifique? (O/N): ");
     scanf(" %c", &user_choice);
      if (user_choice == 'O' || user_choice == 'o') {
-        // Ask the user for the word to search
         char search_word[100];
         printf("Entrez le mot à rechercher : ");
         scanf("%s", search_word);
 
-        // Search for the word in the dictionary
         int occurrence = rechercherMot("dictionnaire.txt", search_word);
 
         if (occurrence > 0) {
@@ -324,7 +320,6 @@ void visualiserCaracteristiquesDictionnaire() {
             scanf(" %c", &add_choice);
 
             if (add_choice == 'O' || add_choice == 'o') {
-                // Add the word to the dictionary in the correct alphabetical order
                 FILE *file = fopen("dictionnaire.txt", "a+");
                 if (file == NULL) {
                     printf("Erreur lors de l'ouverture du fichier.\n");
@@ -333,7 +328,6 @@ void visualiserCaracteristiquesDictionnaire() {
 
                 fprintf(file, "%s\n", search_word);
 
-                // Close the file
                 fclose(file);
 
                 printf("Le mot '%s' a été ajouté au dictionnaire.\n", search_word);
@@ -357,7 +351,7 @@ int rechercherMot(const char *file_path, const char *search_word) {
     }
 
     int occurrence = 0;
-    char buffer[100]; // Adjust the buffer size based on your needs
+    char buffer[100]; 
 
     while (fscanf(file, "%s", buffer) == 1) {
         if (strcmp(buffer, search_word) == 0) {
