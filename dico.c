@@ -278,7 +278,7 @@ void visualiserCaracteristiquesDictionnaire() {
             longest_length = length;
         }
 
-        if (length >= 1 && length <= 9) {
+        if (length >= 1 && length <= 20) {
             word_count_by_length[length - 1]++;
         }
     }
@@ -297,10 +297,74 @@ void visualiserCaracteristiquesDictionnaire() {
 
     // Additional statistics
     printf("\nNombre de mots par longueur   :\n");
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 20; i++) {
         if( word_count_by_length[i] != 0)
             printf("   Longueur %d caractères    : %d mots\n", i + 1, word_count_by_length[i]);
     }
 
     printf("==============================\n\n");
+    
+    char user_choice;
+    printf("\nVoulez-vous rechercher un mot spécifique? (O/N): ");
+    scanf(" %c", &user_choice);
+     if (user_choice == 'O' || user_choice == 'o') {
+        // Ask the user for the word to search
+        char search_word[100];
+        printf("Entrez le mot à rechercher : ");
+        scanf("%s", search_word);
+
+        // Search for the word in the dictionary
+        int occurrence = rechercherMot("dictionnaire.txt", search_word);
+
+        if (occurrence > 0) {
+            printf("Le mot '%s' existe dans le dictionnaire et apparaît %d fois.\n", search_word, occurrence);
+        } else {
+            char add_choice;
+            printf("Le mot '%s' n'existe pas dans le dictionnaire. Voulez-vous l'ajouter? (O/N): ", search_word);
+            scanf(" %c", &add_choice);
+
+            if (add_choice == 'O' || add_choice == 'o') {
+                // Add the word to the dictionary in the correct alphabetical order
+                FILE *file = fopen("dictionnaire.txt", "a+");
+                if (file == NULL) {
+                    printf("Erreur lors de l'ouverture du fichier.\n");
+                    return 1;
+                }
+
+                fprintf(file, "%s\n", search_word);
+
+                // Close the file
+                fclose(file);
+
+                printf("Le mot '%s' a été ajouté au dictionnaire.\n", search_word);
+
+                // Display updated dictionary statistics
+                visualiserCaracteristiquesDictionnaire("dictionnaire.txt");
+            } else {
+                printf("Le mot '%s' n'a pas été ajouté au dictionnaire.\n", search_word);
+            }
+        }
+    }
+
+    return 0;
+}
+
+int rechercherMot(const char *file_path, const char *search_word) {
+    FILE *file = fopen(file_path, "r");
+    if (file == NULL) {
+        printf("Erreur : fichier '%s' non trouvé.\n", file_path);
+        return 0;
+    }
+
+    int occurrence = 0;
+    char buffer[100]; // Adjust the buffer size based on your needs
+
+    while (fscanf(file, "%s", buffer) == 1) {
+        if (strcmp(buffer, search_word) == 0) {
+            occurrence++;
+        }
+    }
+
+    fclose(file);
+    return occurrence;
 }
