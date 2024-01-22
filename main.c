@@ -311,9 +311,9 @@ int main(int argc, char *argv[])
         // case 4:
         //     supprimerMot();
         //     break;
-        // case 5:
-        //     visualiserCaracteristiquesDictionnaire();
-        //     break;
+    case 5:
+        visualiserCaracteristiquesDictionnaire();
+        break;
     case 6:
         char l, a[2];
         printf("Choisir le niveau de difficulté :\n");

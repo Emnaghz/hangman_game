@@ -250,3 +250,57 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
     fclose(dico);
     sortDictionary();
 }
+void visualiserCaracteristiquesDictionnaire() {
+    FILE *file = fopen("dictionnaire.txt", "r");
+    if (file == NULL) {
+        printf("Error: File '%s' not found.\n", "dictionnaire.txt");
+        return;
+    }
+
+      int total_words = 0;
+    int total_characters = 0;
+    int shortest_length = -1;
+    int longest_length = -1;
+    int word_count_by_length[20] = {0};  // Assuming words have lengths between 1 and 20 characters
+
+    char buffer[100]; 
+
+    while (fscanf(file, "%s", buffer) == 1) {
+        int length = strlen(buffer);
+        total_words++;
+        total_characters += length;
+
+        if (shortest_length == -1 || length < shortest_length) {
+            shortest_length = length;
+        }
+
+        if (length > longest_length) {
+            longest_length = length;
+        }
+
+        if (length >= 1 && length <= 9) {
+            word_count_by_length[length - 1]++;
+        }
+    }
+
+    fclose(file);
+
+    double average_length = total_characters / (double)total_words;
+
+    // Customize each line separately
+    printf("\nStatistiques du dictionnaire :\n");
+    printf("==============================\n");
+    printf("Nombre total de mots           : \x1b[32m%d\x1b[0m\n", total_words);  // Green color
+    printf("Longueur moyenne des mots      : \x1b[34m%.2f\x1b[0m caractères\n", average_length);  // Blue color
+    printf("Longueur du mot le plus court  : \x1b[31m%d\x1b[0m caractères\n", shortest_length);  // Red color
+    printf("Longueur du mot le plus long   : \x1b[33m%d\x1b[0m caractères\n", longest_length);  // Yellow color
+
+    // Additional statistics
+    printf("\nNombre de mots par longueur   :\n");
+    for (int i = 0; i < 9; i++) {
+        if( word_count_by_length[i] != 0)
+            printf("   Longueur %d caractères    : %d mots\n", i + 1, word_count_by_length[i]);
+    }
+
+    printf("==============================\n\n");
+}
