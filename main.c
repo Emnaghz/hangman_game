@@ -11,6 +11,7 @@
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_BLUE "\x1b[34m"
 ArbreBin *exempleArbre()
 {
     // 0              a
@@ -180,7 +181,7 @@ int hangman(char *mot, int maxTentatives, char a)
                 printf("%s                     __/ |                                                      %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 printf("%s                    |___/                                                       %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
 
-                printf("Félicitations ! Vous avez deviné le mot : %s\n", mot);
+                printf(ANSI_COLOR_GREEN "Félicitations !\n" ANSI_COLOR_RESET "Vous avez deviné le mot: \t" ANSI_COLOR_BLUE "%s\n" ANSI_COLOR_RESET, mot);
                 return 1;
             }
         }
@@ -240,7 +241,8 @@ int hangman(char *mot, int maxTentatives, char a)
     printf("%s                                                    %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("%s                                                    %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
 
-    printf("Dommage ! Vous n'avez pas réussi à deviner le mot. Le mot était : %s\n", mot);
+    printf(ANSI_COLOR_RED  "Dommage ! Vous n'avez pas réussi à deviner le mot.\n"ANSI_COLOR_RESET);
+    printf( "Le mot était : \t" ANSI_COLOR_BLUE "%s\n" ANSI_COLOR_RESET, mot);
     return 0;
 }
 // Fonction pour obtenir un caractère sans afficher à l'écran
@@ -477,7 +479,7 @@ int main(int argc, char *argv[])
         printf("*");
     }
 }
-                printf("\nMot secret enregistré : %s\n", randomWord);
+                //printf("\nMot secret enregistré : %s\n", randomWord);
                 hangman(randomWord, 6, 'h');
             }
             else if(nbr==1)
@@ -487,6 +489,7 @@ int main(int argc, char *argv[])
             break;
         default:
             printf("Niveau de difficulté non reconnu.\n");
+             scanf(" %1s", a);
             break;
         }
         free(randomWord);
