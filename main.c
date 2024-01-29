@@ -6,6 +6,7 @@
 #include "arbres.h"
 #include "dico.c"
 #include <stdlib.h>
+#include <termios.h>
 // ANSI escape codes for text colors
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -38,7 +39,7 @@ char *motAleatoire(char **motArray, int motCount, int mn, int mx)
     }
     srand(time(NULL));
     // Generate a random index
-    //printf("le nombre %d", a);
+    // printf("le nombre %d", a);
     int randomIndex = rand() % motCount;
     while (strlen(motArray[randomIndex]) != a)
         randomIndex = rand() % motCount;
@@ -101,7 +102,7 @@ void afficherMot(char *mot, char *lettresDevinees)
     {
         if (strchr(lettresDevinees, mot[i]) != NULL)
         {
-            printf("%c ", mot[i]);
+            printf(ANSI_COLOR_GREEN "%c " ANSI_COLOR_RESET, mot[i]);
         }
         else
         {
@@ -242,7 +243,34 @@ int hangman(char *mot, int maxTentatives, char a)
     printf("Dommage ! Vous n'avez pas réussi à deviner le mot. Le mot était : %s\n", mot);
     return 0;
 }
+// Fonction pour obtenir un caractère sans afficher à l'écran
+char getch()
+{
+    char buf = 0;
+    struct termios old = {0};
+    fflush(stdout);
 
+    if (tcgetattr(0, &old) < 0)
+        perror("tcsetattr()");
+    old.c_lflag &= ~ICANON;
+    old.c_lflag &= ~ECHO;
+    old.c_cc[VMIN] = 1;
+    old.c_cc[VTIME] = 0;
+
+    if (tcsetattr(0, TCSANOW, &old) < 0)
+        perror("tcsetattr ICANON");
+
+    if (read(0, &buf, 1) < 0)
+        perror("read()");
+
+    old.c_lflag |= ICANON;
+    old.c_lflag |= ECHO;
+
+    if (tcsetattr(0, TCSADRAIN, &old) < 0)
+        perror("tcsetattr ~ICANON");
+
+    return (buf);
+}
 int main(int argc, char *argv[])
 {
     char manuelle[100];
@@ -287,8 +315,8 @@ int main(int argc, char *argv[])
         addToDictionary(manuelle);
         // Insert the word into the dictionary tree
         dicoInsererMot(newWord, &A, &queue);
-        //printf("\n insertion terminé \n");
-        // Insert the word into the dynamic array
+        // printf("\n insertion terminé \n");
+        //  Insert the word into the dynamic array
         char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
         if (newMotArray == NULL)
         {
@@ -315,6 +343,30 @@ int main(int argc, char *argv[])
         visualiserCaracteristiquesDictionnaire();
         break;
     case 6:
+        int nbr;
+        printf("*******************************************\n");
+        printf("              MENU DE JEU                  \n");
+        printf("*******************************************\n");
+        printf("1. Jouer en mode solo\n");
+        printf("2. Jouer en mode deux joueurs\n");
+        printf("*******************************************\n");
+        printf("Choisissez l'option (1 ou 2) : ");
+        scanf("%d", &nbr);
+        switch (nbr)
+        {
+        case 1:
+            printf("Vous avez choisi de jouer en mode solo.\n");
+            break;
+
+        case 2:
+            printf("Vous avez choisi de jouer en mode deux joueurs.\n");
+            break;
+
+        default:
+            printf("Choix invalide. Veuillez choisir 1 ou 2.\n");
+            scanf("%d", &nbr);
+            break;
+        }
         char l, a[2];
         printf("Choisir le niveau de difficulté :\n");
         printf("e: Facile\n");
@@ -323,23 +375,120 @@ int main(int argc, char *argv[])
         scanf(" %1s", a);
         printf("\n");
         char *randomWord = "";
+        randomWord = (char *)malloc(50 * sizeof(char));
+           int i = 0;
+           char c;
         switch (a[0])
-        {
+        {    
         case 'e':
-            randomWord = motAleatoire(motArray, motCount, 1, 4);
-            hangman(randomWord, 10, 'e');
+            if (nbr == 2)
+            {
+                printf("Joueur 1, veuillez entrer le mot secret : ");
+                printf("Vous etes en mode easy  de preference le mot entre 2 et 4 caracteres ");
+                while (1)
+                {
+                    c = getch();
+                    if (c == '\r' || c == '\n')
+                    {
+                        // Si l'utilisateur appuie sur Entrée, terminer la saisie
+                        randomWord[i] = '\0';
+                        break;
+                    }
+                    else if (i < sizeof(randomWord) - 1)
+                    {
+                        // Stocker le caractère dans le motSecret
+                        randomWord[i++] = c;
+                        // Afficher un astérisque à l'écran
+                        printf("*");
+                    }
+                }
+                //printf("\nMot secret enregistré : %s\n", randomWord);
+                hangman(randomWord, 10, 'e');
+            }
+            else if (nbr == 1)
+            {
+                randomWord = motAleatoire(motArray, motCount, 1, 4);
+            hangman(randomWord, 10, 'e');}
             break;
         case 'm':
+           if (nbr == 2)
+            {
+                printf("Joueur 1, veuillez entrer le mot secret : ");
+                printf("Vous etes en mode medium   de preference le mot entre 4 et 6 caracteres ");
+                while (1)
+                {
+                    c = getch();
+                    if (c == '\r' || c == '\n')
+                    {
+                        // Si l'utilisateur appuie sur Entrée, terminer la saisie
+                        randomWord[i] = '\0';
+                        break;
+                    }
+                    else if (i < sizeof(randomWord) - 1)
+                    {
+                        // Stocker le caractère dans le motSecret
+                        randomWord[i++] = c;
+                        // Afficher un astérisque à l'écran
+                        printf("*");
+                    }
+                }
+                //printf("\nMot secret enregistré : %s\n", randomWord);
+                hangman(randomWord, 8, 'm');
+            }
+        else if (nbr == 1)
+        {
             randomWord = motAleatoire(motArray, motCount, 4, 6);
-            hangman(randomWord, 8, 'm');
+            hangman(randomWord, 8, 'm');}
             break;
         case 'h':
+           if (nbr == 2)
+            {
+                printf("Joueur 1, veuillez entrer le mot secret : ");
+                printf("Vous etes en mode hard ,de preference le mot entre 7 et 10 caracteres ");
+                while (1)
+                {
+                    c = getch();
+                     if (c == '\r' || c == '\n')
+    {
+        // Si l'utilisateur appuie sur Entrée, terminer la saisie
+        randomWord[i] = '\0';
+        break;
+    }
+   else if (c == '\b' && i > 0)
+    {
+        // If backspace is pressed and there are characters entered,
+        // decrement the index to remove the last character
+        i--;
+        randomWord[i] = '\0'; // Remove the last character from the array
+
+        // Move the cursor back, erase the character on the screen, and update the displayed asterisks
+        printf("\r");
+        for (int j = 0; j < i; j++)
+        {
+            printf("*");
+        }
+        printf(" \b"); // Move the cursor back to the correct position
+    }
+    else if (i < sizeof(randomWord) - 1)
+    {
+        // Stocker le caractère dans le motSecret
+        randomWord[i++] = c;
+        // Afficher un astérisque à l'écran
+        printf("*");
+    }
+}
+                printf("\nMot secret enregistré : %s\n", randomWord);
+                hangman(randomWord, 6, 'h');
+            }
+            else if(nbr==1)
+            {
             randomWord = motAleatoire(motArray, motCount, 7, 10);
-            hangman(randomWord, 6, 'h');
+            hangman(randomWord, 6, 'h');}
             break;
         default:
             printf("Niveau de difficulté non reconnu.\n");
             break;
         }
+        free(randomWord);
     }
 }

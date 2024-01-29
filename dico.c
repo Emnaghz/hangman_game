@@ -250,6 +250,25 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
     fclose(dico);
     sortDictionary();
 }
+int rechercherMot(const char *file_path, const char *search_word) {
+    FILE *file = fopen(file_path, "r");
+    if (file == NULL) {
+        printf("Erreur : fichier '%s' non trouvé.\n", file_path);
+        return 0;
+    }
+
+    int occurrence = 0;
+    char buffer[100]; 
+
+    while (fscanf(file, "%s", buffer) == 1) {
+        if (strcmp(buffer, search_word) == 0) {
+            occurrence++;
+        }
+    }
+
+    fclose(file);
+    return occurrence;
+}
 void visualiserCaracteristiquesDictionnaire() {
     FILE *file = fopen("dictionnaire.txt", "r");
     if (file == NULL) {
@@ -323,7 +342,6 @@ void visualiserCaracteristiquesDictionnaire() {
                 FILE *file = fopen("dictionnaire.txt", "a+");
                 if (file == NULL) {
                     printf("Erreur lors de l'ouverture du fichier.\n");
-                    return 1;
                 }
 
                 fprintf(file, "%s\n", search_word);
@@ -339,26 +357,5 @@ void visualiserCaracteristiquesDictionnaire() {
             }
         }
     }
-
-    return 0;
 }
 
-int rechercherMot(const char *file_path, const char *search_word) {
-    FILE *file = fopen(file_path, "r");
-    if (file == NULL) {
-        printf("Erreur : fichier '%s' non trouvé.\n", file_path);
-        return 0;
-    }
-
-    int occurrence = 0;
-    char buffer[100]; 
-
-    while (fscanf(file, "%s", buffer) == 1) {
-        if (strcmp(buffer, search_word) == 0) {
-            occurrence++;
-        }
-    }
-
-    fclose(file);
-    return occurrence;
-}
