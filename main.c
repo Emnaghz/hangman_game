@@ -12,6 +12,7 @@
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_COLOR_GREEN "\x1b[32m"
 #define ANSI_COLOR_BLUE "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
 ArbreBin *exempleArbre()
 {
     // 0              a
@@ -120,7 +121,7 @@ void afficherMot(char *mot, char *lettresDevinees)
     printf("\n");
 }
 
-int hangman(char *mot, int maxTentatives, char a)
+int hangman(char *mot, int maxTentatives, char a, char *mode)
 {
     printf("\n\t Be aware you can be hanged !!\n");
 
@@ -140,7 +141,9 @@ int hangman(char *mot, int maxTentatives, char a)
     printf("\t Bienvenue dans le jeu du Pendu !\n");
 
     while (tentatives < maxTentatives)
-    {
+    {     printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+      printf(ANSI_COLOR_MAGENTA "\t Tour de %s \n " ANSI_COLOR_RESET, mode);
+      printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("\n Il vous reste %d tentative sur %d\n", maxTentatives - tentatives, maxTentatives);
         afficherMot(mot, lettresDevinees);
         char lettre;
@@ -186,7 +189,9 @@ int hangman(char *mot, int maxTentatives, char a)
             }
         }
         else
-        {
+        { printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+             printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 \n " ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
             if (a == 'm')
             {
                 printf("\n");
@@ -214,7 +219,7 @@ int hangman(char *mot, int maxTentatives, char a)
                 tentatives++;
             }
             if (a == 'e')
-            {
+            { 
                 printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
@@ -284,9 +289,9 @@ int main(int argc, char *argv[])
     creerDictionnaire(&A, &motArray, &motCount);
     QueueNode *queue = NULL;
     // Display menu
-    printf("\n============================================================\n");
+    printf(ANSI_COLOR_MAGENTA "\n============================================================\n" ANSI_COLOR_RESET);
     printf("                            Menu     \n");
-    printf("============================================================\n");
+    printf(ANSI_COLOR_MAGENTA "============================================================\n" ANSI_COLOR_RESET);
     printf("\t 1. Ajouter un mot\n");
     printf("\t 2. Visualiser l'arbre\n");
     printf("\t 3. Rechercher un mot\n");
@@ -294,10 +299,11 @@ int main(int argc, char *argv[])
     printf("\t 5. Visualiser les caractéristiques du dictionnaire\n");
     printf("\t 6. Jouer au Pendu\n");
     printf("\t 0. Quitter\n");
-    printf("============================================================ \n");
+    printf(ANSI_COLOR_MAGENTA "============================================================ \n" ANSI_COLOR_RESET);
     // Get user choice
     printf("Choix: ");
     scanf("%d", &choix);
+    printf("\n \n");
     // Perform action based on user choice
     switch (choix)
     {
@@ -346,12 +352,12 @@ int main(int argc, char *argv[])
         break;
     case 6:
         int nbr;
-        printf("*******************************************\n");
+        printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("              MENU DE JEU                  \n");
-        printf("*******************************************\n");
-        printf("1. Jouer en mode solo\n");
-        printf("2. Jouer en mode deux joueurs\n");
-        printf("*******************************************\n");
+        printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
+        printf(" 1. Jouer en mode solo\n");
+        printf(" 2. Jouer en mode deux joueurs\n");
+        printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("Choisissez l'option (1 ou 2) : ");
         scanf("%d", &nbr);
         switch (nbr)
@@ -381,6 +387,9 @@ int main(int argc, char *argv[])
         char c;
         if (nbr == 2)
         {
+         printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+            printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 : \n" ANSI_COLOR_RESET);
+          printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
             printf("Joueur 1, veuillez entrer le mot secret : \n");
             switch (a[0])
             {
@@ -414,7 +423,7 @@ int main(int argc, char *argv[])
                     printf("*");
                 }
             }
-            printf("\n Joueur 1 , Voulez vous enregister ce mot dans le dictionnaire : \n");
+            printf("\n  Voulez vous enregister ce mot dans le dictionnaire : \n");
             printf("O. OUI \n");
             printf("N. NON \n");
             scanf(" %c", &rep);
@@ -431,33 +440,34 @@ int main(int argc, char *argv[])
             if (nbr == 2)
             {
 
-                hangman(randomWord, 10, 'e');
+                hangman(randomWord, 10, 'e', "Joueur 2");
             }
             else if (nbr == 1)
             {
                 randomWord = motAleatoire(motArray, motCount, 1, 4);
-                hangman(randomWord, 10, 'e');
+                hangman(randomWord, 10, 'e', "Moi");
             }
             break;
         case 'm':
             if (nbr == 2)
             {
-                hangman(randomWord, 8, 'm');
+                hangman(randomWord, 8, 'm', "Joueur 2");
             }
             else if (nbr == 1)
             {
                 randomWord = motAleatoire(motArray, motCount, 4, 6);
-                hangman(randomWord, 8, 'm');
+                hangman(randomWord, 8, 'm', "Moi");
             }
             break;
         case 'h':
             if (nbr == 2)
-            {hangman(randomWord, 6, 'h');
+            {
+                hangman(randomWord, 6, 'h', "Joueur 2");
             }
             else if (nbr == 1)
             {
                 randomWord = motAleatoire(motArray, motCount, 7, 10);
-                hangman(randomWord, 6, 'h');
+                hangman(randomWord, 6, 'h', "Moi");
             }
             break;
         default:
