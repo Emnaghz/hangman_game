@@ -310,7 +310,6 @@ int main(int argc, char *argv[])
     case 1:
         printf("donner le mot a inserer ");
         scanf("%s", manuelle);
-        // printf("test0 %d \n", motCount);
         //  Allocate memory for the new word in the dynamic array
         char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
         if (newWord == NULL)
@@ -344,9 +343,12 @@ int main(int argc, char *argv[])
         scanf("%s", manuelle);
         sousArbreDeRecherche(manuelle);
         break;
-        // case 4:
-        //     supprimerMot();
-        //     break;
+        case 4:
+           printf("Donner le mot a supprimer :");
+        scanf("%s", manuelle);
+            supprimerMot("dictionnaire.txt",manuelle);
+            supprimerLignesVides("dictionnaire.txt")
+            break;
     case 5:
         visualiserCaracteristiquesDictionnaire();
         break;
