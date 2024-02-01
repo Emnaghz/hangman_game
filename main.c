@@ -347,7 +347,7 @@ int main(int argc, char *argv[])
            printf("Donner le mot a supprimer :");
         scanf("%s", manuelle);
             supprimerMot("dictionnaire.txt",manuelle);
-            supprimerLignesVides("dictionnaire.txt")
+            supprimerLignesVides("dictionnaire.txt");
             break;
     case 5:
         visualiserCaracteristiquesDictionnaire();
