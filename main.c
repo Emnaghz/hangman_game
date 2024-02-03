@@ -142,8 +142,8 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
 
     while (tentatives < maxTentatives)
     {     printf(ANSI_COLOR_MAGENTA "\n*******************************************\n" ANSI_COLOR_RESET);
-      printf(ANSI_COLOR_MAGENTA "\t %s \n " ANSI_COLOR_RESET, mode);
-      printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_MAGENTA " \t %s \n" ANSI_COLOR_RESET, mode);
+    printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("\n Il vous reste %d tentative sur %d\n", maxTentatives - tentatives, maxTentatives);
         afficherMot(mot, lettresDevinees);
         char lettre;
