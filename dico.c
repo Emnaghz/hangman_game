@@ -423,5 +423,5 @@ void supprimerMot(const char *nomFichier, const char *motASupprimer) {
 
     // Fermer le fichier
     fclose(fichier);
-supprimerLignesVides("dictionnaire.txt")
+supprimerLignesVides("dictionnaire.txt");
 }

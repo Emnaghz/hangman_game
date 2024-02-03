@@ -4,6 +4,7 @@ assurance
 bonjour
 cacao
 cas
+ce
 cheminee
 chocolat
 coquette
@@ -14,6 +15,8 @@ fraction
 hello
 hey
 maman
+oeuf
 salut
 tunisie
+volcanique
 xylo

@@ -141,8 +141,8 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
     printf("\t Bienvenue dans le jeu du Pendu !\n");
 
     while (tentatives < maxTentatives)
-    {     printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-      printf(ANSI_COLOR_MAGENTA "\t Tour de %s \n " ANSI_COLOR_RESET, mode);
+    {     printf(ANSI_COLOR_MAGENTA "\n*******************************************\n" ANSI_COLOR_RESET);
+      printf(ANSI_COLOR_MAGENTA "\t %s \n " ANSI_COLOR_RESET, mode);
       printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("\n Il vous reste %d tentative sur %d\n", maxTentatives - tentatives, maxTentatives);
         afficherMot(mot, lettresDevinees);
@@ -174,7 +174,10 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
             }
 
             if (motComplet)
-            {
+            { printf(ANSI_COLOR_BLUE "\n***********************************************************************************\n" ANSI_COLOR_RESET);
+              printf(ANSI_COLOR_BLUE "\t \t Résultats \n" ANSI_COLOR_RESET);
+              printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);
+
                 printf("%s   _____                            _         _       _   _                   _ %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 printf("%s  / ____|                          | |       | |     | | (_)                 | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 printf("%s | |     ___  _ __   __ _ _ __ __ _| |_ _   _| | __ _| |_ _  ___  _ __  ___  | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
@@ -185,13 +188,12 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 printf("%s                    |___/                                                       %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
 
                 printf(ANSI_COLOR_GREEN "Félicitations !\n" ANSI_COLOR_RESET "Vous avez deviné le mot: \t" ANSI_COLOR_BLUE "%s\n" ANSI_COLOR_RESET, mot);
-                return 1;
+                    afficherMot(mot, mot);
+            printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);                return 1;
             }
         }
         else
-        { printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-             printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 \n " ANSI_COLOR_RESET);
-            printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
+        {
             if (a == 'm')
             {
                 printf("\n");
@@ -237,6 +239,9 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
             //                 tentatives++;}
         }
     }
+     printf(ANSI_COLOR_BLUE "\n******************************************************\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_BLUE "\t \t Résultats \n" ANSI_COLOR_RESET);
+     printf(ANSI_COLOR_BLUE "******************************************************\n " ANSI_COLOR_RESET);
     printf("%s   _____                                             %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("%s  / ____|                                            %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("%s | |  __  __ _ _ __ ___   ___    _____   _____ _ __ %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
@@ -248,6 +253,8 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
 
     printf(ANSI_COLOR_RED "Dommage ! Vous n'avez pas réussi à deviner le mot.\n" ANSI_COLOR_RESET);
     printf("Le mot était : \t" ANSI_COLOR_BLUE "%s\n" ANSI_COLOR_RESET, mot);
+    afficherMot(mot, mot);
+    printf(ANSI_COLOR_BLUE "******************************************************\n " ANSI_COLOR_RESET);
     return 0;
 }
 // Fonction pour obtenir un caractère sans afficher à l'écran
@@ -358,7 +365,7 @@ int main(int argc, char *argv[])
         printf("              MENU DE JEU                  \n");
         printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
         printf(" 1. Jouer en mode solo\n");
-        printf(" 2. Jouer en mode deux joueurs\n");
+        printf("  2. Jouer en mode deux joueurs\n");
         printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("Choisissez l'option (1 ou 2) : ");
         scanf("%d", &nbr);
@@ -378,9 +385,9 @@ int main(int argc, char *argv[])
         }
         char l, a[2], rep;
         printf("Choisir le niveau de difficulté :\n");
-        printf("e: Facile\n");
-        printf("m: Moyen\n");
-        printf("h: Difficile\n");
+        printf("e: easy\n");
+        printf("m: medium\n");
+        printf("h: hard\n");
         scanf(" %1s", a);
         printf("\n");
         char *randomWord = "";
@@ -396,13 +403,13 @@ int main(int argc, char *argv[])
             switch (a[0])
             {
             case 'e':
-                printf("Vous etes en mode easy  de preference ,le mot entre 2 et 4 caracteres \n");
+                printf("Vous etes en niveau easy de preference ,le mot entre 2 et 4 caracteres \n");
                 break;
             case 'm':
-                printf("Vous etes en mode medium   de preference le mot entre 4 et 6 caracteres \n");
+                printf("Vous etes en niveau medium   de preference le mot entre 4 et 6 caracteres \n");
                 break;
             case 'h':
-                printf("Vous etes en mode hard ,de preference le mot entre 7 et 10 caracteres \n ");
+                printf("Vous etes en niveau hard ,de preference le mot entre 7 et 10 caracteres \n ");
                 break;
             default:
                 printf("Niveau de difficulté non reconnu.\n");
@@ -442,34 +449,34 @@ int main(int argc, char *argv[])
             if (nbr == 2)
             {
 
-                hangman(randomWord, 10, 'e', "Joueur 2");
+                hangman(randomWord, 10, 'e', "Tour de Joueur 2");
             }
             else if (nbr == 1)
             {
-                randomWord = motAleatoire(motArray, motCount, 1, 4);
-                hangman(randomWord, 10, 'e', "Moi");
+                randomWord = motAleatoire(motArray, motCount, 2, 4);
+                hangman(randomWord, 10, 'e', "Mon tour");
             }
             break;
         case 'm':
             if (nbr == 2)
             {
-                hangman(randomWord, 8, 'm', "Joueur 2");
+                hangman(randomWord, 8, 'm', "Tour de Joueur 2");
             }
             else if (nbr == 1)
             {
                 randomWord = motAleatoire(motArray, motCount, 4, 6);
-                hangman(randomWord, 8, 'm', "Moi");
+                hangman(randomWord, 8, 'm', "Mon tour");
             }
             break;
         case 'h':
             if (nbr == 2)
             {
-                hangman(randomWord, 6, 'h', "Joueur 2");
+                hangman(randomWord, 6, 'h', "Tour de Joueur 2");
             }
             else if (nbr == 1)
             {
                 randomWord = motAleatoire(motArray, motCount, 7, 10);
-                hangman(randomWord, 6, 'h', "Moi");
+                hangman(randomWord, 6, 'h', "Mon tour");
             }
             break;
         default:
