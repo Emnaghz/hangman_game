@@ -1,3 +1,5 @@
+#ifndef DEF_ARBRES
+#define DEF_ARBRES
 typedef struct ArbreBin
 {
     char val;
@@ -584,8 +586,9 @@ void motDelArbre(char *mot, ArbreBin *A)
         *mot='\0';
     };
 }
+#include "dico.h"
 ArbreBin *sousArbreDeRecherche(char *mot)
-{
+{ 
     ArbreBin *A = NULL;
     char **motArray = NULL;
     int motCount = 0;
@@ -599,3 +602,4 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     motDelArbre(resultat, res);
     printf("le mot est %s \n", resultat);
 }
+#endif
