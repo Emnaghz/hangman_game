@@ -295,7 +295,8 @@ int main(int argc, char *argv[])
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
-    QueueNode *queue = NULL;
+    QueueNode *queue = NULL;  
+      do {
     // Display menu
     printf(ANSI_COLOR_MAGENTA "\n============================================================\n" ANSI_COLOR_RESET);
     printf("                            Menu     \n");
@@ -315,6 +316,9 @@ int main(int argc, char *argv[])
     // Perform action based on user choice
     switch (choix)
     {
+    case 0:
+        printf("Exiting the program. Goodbye!\n");
+        break;
     case 1:
         printf("donner le mot a inserer ");
         scanf("%s", manuelle);
@@ -487,4 +491,6 @@ int main(int argc, char *argv[])
         }
         free(randomWord);
     }
+    }
+    while(choix!=0);
 }

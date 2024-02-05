@@ -8,6 +8,7 @@ ce
 cheminee
 chocolat
 coquette
+coucou
 de
 domino
 fatma
