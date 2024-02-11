@@ -7,7 +7,7 @@
 #include "listes.h"
 #include "arbres.h"
 #include "dico.c"
-#include <unistd.h> 
+#include <unistd.h>
 // ANSI escape codes for text colors
 #define ANSI_COLOR_RED "\x1b[31m"
 #define ANSI_COLOR_RESET "\x1b[0m"
@@ -142,9 +142,10 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
     printf("\t Bienvenue dans le jeu du Pendu !\n");
 
     while (tentatives < maxTentatives)
-    {     printf(ANSI_COLOR_MAGENTA "\n*******************************************\n" ANSI_COLOR_RESET);
-    printf(ANSI_COLOR_MAGENTA " \t %s \n" ANSI_COLOR_RESET, mode);
-    printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+    {
+        printf(ANSI_COLOR_MAGENTA "\n*******************************************\n" ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_MAGENTA " \t %s \n" ANSI_COLOR_RESET, mode);
+        printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
         printf("\n Il vous reste %d tentative sur %d\n", maxTentatives - tentatives, maxTentatives);
         afficherMot(mot, lettresDevinees);
         char lettre;
@@ -175,9 +176,10 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
             }
 
             if (motComplet)
-            { printf(ANSI_COLOR_BLUE "\n***********************************************************************************\n" ANSI_COLOR_RESET);
-              printf(ANSI_COLOR_BLUE "\t \t Résultats \n" ANSI_COLOR_RESET);
-              printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);
+            {
+                printf(ANSI_COLOR_BLUE "\n***********************************************************************************\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_BLUE "\t \t Résultats \n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);
 
                 printf("%s   _____                            _         _       _   _                   _ %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 printf("%s  / ____|                          | |       | |     | | (_)                 | |%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
@@ -189,8 +191,9 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 printf("%s                    |___/                                                       %s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
 
                 printf(ANSI_COLOR_GREEN "Félicitations !\n" ANSI_COLOR_RESET "Vous avez deviné le mot: \t" ANSI_COLOR_BLUE "%s\n" ANSI_COLOR_RESET, mot);
-                    afficherMot(mot, mot);
-            printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);                return 1;
+                afficherMot(mot, mot);
+                printf(ANSI_COLOR_BLUE "***********************************************************************************\n" ANSI_COLOR_RESET);
+                return 1;
             }
         }
         else
@@ -222,7 +225,7 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 tentatives++;
             }
             if (a == 'e')
-            { 
+            {
                 printf("\n");
                 printf("\033[H\033[J ┏━━━┓\n");
                 printf(" ┃   %c\n", tentatives < 1 ? ' ' : 'O');
@@ -240,9 +243,9 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
             //                 tentatives++;}
         }
     }
-     printf(ANSI_COLOR_BLUE "\n******************************************************\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_BLUE "\n******************************************************\n" ANSI_COLOR_RESET);
     printf(ANSI_COLOR_BLUE "\t \t Résultats \n" ANSI_COLOR_RESET);
-     printf(ANSI_COLOR_BLUE "******************************************************\n " ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_BLUE "******************************************************\n " ANSI_COLOR_RESET);
     printf("%s   _____                                             %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("%s  / ____|                                            %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("%s | |  __  __ _ _ __ ___   ___    _____   _____ _ __ %s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
@@ -295,202 +298,202 @@ int main(int argc, char *argv[])
     char **motArray = NULL;
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
-    QueueNode *queue = NULL;  
-      do {
-    // Display menu
-    printf(ANSI_COLOR_MAGENTA "\n============================================================\n" ANSI_COLOR_RESET);
-    printf("                            Menu     \n");
-    printf(ANSI_COLOR_MAGENTA "============================================================\n" ANSI_COLOR_RESET);
-    printf("\t 1. Ajouter un mot\n");
-    printf("\t 2. Visualiser l'arbre\n");
-    printf("\t 3. Rechercher un mot\n");
-    printf("\t 4. Supprimer un mot\n");
-    printf("\t 5. Visualiser les caractéristiques du dictionnaire\n");
-    printf("\t 6. Jouer au Pendu\n");
-    printf("\t 0. Quitter\n");
-    printf(ANSI_COLOR_MAGENTA "============================================================ \n" ANSI_COLOR_RESET);
-    // Get user choice
-    printf("Choix: ");
-    scanf("%d", &choix);
-    printf("\n \n");
-    // Perform action based on user choice
-    switch (choix)
+    QueueNode *queue = NULL;
+    do
     {
-    case 0:
-        printf("Exiting the program. Goodbye!\n");
-        break;
-    case 1:
-        printf("donner le mot a inserer ");
-        scanf("%s", manuelle);
-        //  Allocate memory for the new word in the dynamic array
-        char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
-        if (newWord == NULL)
+        // Display menu
+        printf(ANSI_COLOR_MAGENTA "\n============================================================\n" ANSI_COLOR_RESET);
+        printf("                            Menu     \n");
+        printf(ANSI_COLOR_MAGENTA "============================================================\n" ANSI_COLOR_RESET);
+        printf("\t 1. Ajouter un mot\n");
+        printf("\t 2. Visualiser l'arbre\n");
+        printf("\t 3. Rechercher un mot\n");
+        printf("\t 4. Supprimer un mot\n");
+        printf("\t 5. Visualiser les caractéristiques du dictionnaire\n");
+        printf("\t 6. Jouer au Pendu\n");
+        printf("\t 0. Quitter\n");
+        printf(ANSI_COLOR_MAGENTA "============================================================ \n" ANSI_COLOR_RESET);
+        // Get user choice
+        printf("Choix: ");
+        scanf("%d", &choix);
+        printf("\n \n");
+        // Perform action based on user choice
+        switch (choix)
         {
-            printf("\nMemory allocation error");
+        case 0:
+            printf("Exiting the program. Goodbye!\n");
             break;
-        }
-        // Copy the manually entered word to the new memory
-        strcpy(newWord, manuelle);
-        addToDictionary(manuelle);
-        // Insert the word into the dictionary tree
-        dicoInsererMot(newWord, &A, &queue);
-        // printf("\n insertion terminé \n");
-        //  Insert the word into the dynamic array
-        char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
-        if (newMotArray == NULL)
-        {
-            printf("\nMemory reallocation error");
-            free(newWord);
-            break;
-        }
-        newMotArray[motCount] = newWord;
-        motArray = newMotArray;
-        motCount++;
-        break;
-    case 2:
-        generateMermaidScript(A, "mermaid.md");
-        break;
-    case 3:
-        printf("Donner le mot a chercher  ");
-        scanf("%s", manuelle);
-        sousArbreDeRecherche(manuelle);
-        break;
-        case 4:
-           printf("Donner le mot a supprimer :");
-        scanf("%s", manuelle);
-            supprimerMot("dictionnaire.txt",manuelle);
-            supprimerLignesVides("dictionnaire.txt");
-            break;
-    case 5:
-        visualiserCaracteristiquesDictionnaire();
-        break;
-    case 6:
-        int nbr;
-        printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-        printf("              MENU DE JEU                  \n");
-        printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
-        printf(" 1. Jouer en mode solo\n");
-        printf("  2. Jouer en mode deux joueurs\n");
-        printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-        printf("Choisissez l'option (1 ou 2) : ");
-        scanf("%d", &nbr);
-        switch (nbr)
-        {
         case 1:
-            printf("Vous avez choisi de jouer en mode solo.\n");
+            printf("donner le mot a inserer ");
+            scanf("%s", manuelle);
+            //  Allocate memory for the new word in the dynamic array
+            char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
+            if (newWord == NULL)
+            {
+                printf("\nMemory allocation error");
+                break;
+            }
+            // Copy the manually entered word to the new memory
+            strcpy(newWord, manuelle);
+            addToDictionary(manuelle);
+            // Insert the word into the dictionary tree
+            dicoInsererMot(newWord, &A, &queue);
+            // printf("\n insertion terminé \n");
+            //  Insert the word into the dynamic array
+            char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
+            if (newMotArray == NULL)
+            {
+                printf("\nMemory reallocation error");
+                free(newWord);
+                break;
+            }
+            newMotArray[motCount] = newWord;
+            motArray = newMotArray;
+            motCount++;
             break;
-
         case 2:
-            printf("Vous avez choisi de jouer en mode deux joueurs.\n");
+            generateMermaidScript(A, "mermaid.md");
             break;
-        default:
-            printf("Choix invalide. Veuillez choisir 1 ou 2.\n");
+        case 3:
+            printf("Donner le mot a chercher  ");
+            scanf("%s", manuelle);
+            sousArbreDeRecherche(manuelle);
+            break;
+        case 4:
+            printf("Donner le mot a supprimer :");
+            scanf("%s", manuelle);
+            supprimerMot("dictionnaire.txt", manuelle);
+            //supprimerLignesVides("dictionnaire.txt");
+            break;
+        case 5:
+            visualiserCaracteristiquesDictionnaire();
+            break;
+        case 6:
+            int nbr;
+            printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+            printf("              MENU DE JEU                  \n");
+            printf(ANSI_COLOR_MAGENTA "*******************************************\n " ANSI_COLOR_RESET);
+            printf(" 1. Jouer en mode solo\n");
+            printf("  2. Jouer en mode deux joueurs\n");
+            printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+            printf("Choisissez l'option (1 ou 2) : ");
             scanf("%d", &nbr);
-            break;
-        }
-        char l, a[2], rep;
-        printf("Choisir le niveau de difficulté :\n");
-        printf("e: easy\n");
-        printf("m: medium\n");
-        printf("h: hard\n");
-        scanf(" %1s", a);
-        printf("\n");
-        char *randomWord = "";
-        randomWord = (char *)malloc(50 * sizeof(char));
-        int i = 0;
-        char c;
-        if (nbr == 2)
-        {
-         printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-            printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 : \n" ANSI_COLOR_RESET);
-          printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-            printf("Joueur 1, veuillez entrer le mot secret : \n");
+            switch (nbr)
+            {
+            case 1:
+                printf("Vous avez choisi de jouer en mode solo.\n");
+                break;
+
+            case 2:
+                printf("Vous avez choisi de jouer en mode deux joueurs.\n");
+                break;
+            default:
+                printf("Choix invalide. Veuillez choisir 1 ou 2.\n");
+                scanf("%d", &nbr);
+                break;
+            }
+            char l, a[2], rep;
+            printf("Choisir le niveau de difficulté :\n");
+            printf("e: easy\n");
+            printf("m: medium\n");
+            printf("h: hard\n");
+            scanf(" %1s", a);
+            printf("\n");
+            char *randomWord = "";
+            randomWord = (char *)malloc(50 * sizeof(char));
+            int i = 0;
+            char c;
+            if (nbr == 2)
+            {
+                printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 : \n" ANSI_COLOR_RESET);
+                printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
+                printf("Joueur 1, veuillez entrer le mot secret : \n");
+                switch (a[0])
+                {
+                case 'e':
+                    printf("Vous etes en niveau easy de preference ,le mot entre 2 et 4 caracteres \n");
+                    break;
+                case 'm':
+                    printf("Vous etes en niveau medium   de preference le mot entre 4 et 6 caracteres \n");
+                    break;
+                case 'h':
+                    printf("Vous etes en niveau hard ,de preference le mot entre 7 et 10 caracteres \n ");
+                    break;
+                default:
+                    printf("Niveau de difficulté non reconnu.\n");
+                    break;
+                }
+                while (1)
+                {
+                    c = getch();
+                    if (c == '\r' || c == '\n')
+                    {
+                        // Si l'utilisateur appuie sur Entrée, terminer la saisie
+                        randomWord[i] = '\0';
+                        break;
+                    }
+                    else if (i < sizeof(randomWord) - 1)
+                    {
+                        // Stocker le caractère dans le motSecret
+                        randomWord[i++] = c;
+                        // Afficher un astérisque à l'écran
+                        printf("*");
+                    }
+                }
+                printf("\n  Voulez vous enregister ce mot dans le dictionnaire : \n");
+                printf("O. OUI \n");
+                printf("N. NON \n");
+                scanf(" %c", &rep);
+                if (rep == 'O')
+                {
+                    addToDictionary(randomWord);
+                    // Insert the word into the dictionary tree
+                    dicoInsererMot(randomWord, &A, &queue);
+                }
+            }
             switch (a[0])
             {
             case 'e':
-                printf("Vous etes en niveau easy de preference ,le mot entre 2 et 4 caracteres \n");
+                if (nbr == 2)
+                {
+
+                    hangman(randomWord, 10, 'e', "Tour de Joueur 2");
+                }
+                else if (nbr == 1)
+                {
+                    randomWord = motAleatoire(motArray, motCount, 2, 4);
+                    hangman(randomWord, 10, 'e', "Mon tour");
+                }
                 break;
             case 'm':
-                printf("Vous etes en niveau medium   de preference le mot entre 4 et 6 caracteres \n");
+                if (nbr == 2)
+                {
+                    hangman(randomWord, 8, 'm', "Tour de Joueur 2");
+                }
+                else if (nbr == 1)
+                {
+                    randomWord = motAleatoire(motArray, motCount, 4, 6);
+                    hangman(randomWord, 8, 'm', "Mon tour");
+                }
                 break;
             case 'h':
-                printf("Vous etes en niveau hard ,de preference le mot entre 7 et 10 caracteres \n ");
+                if (nbr == 2)
+                {
+                    hangman(randomWord, 6, 'h', "Tour de Joueur 2");
+                }
+                else if (nbr == 1)
+                {
+                    randomWord = motAleatoire(motArray, motCount, 7, 10);
+                    hangman(randomWord, 6, 'h', "Mon tour");
+                }
                 break;
             default:
                 printf("Niveau de difficulté non reconnu.\n");
+                scanf(" %1s", a);
                 break;
             }
-            while (1)
-            {
-                c = getch();
-                if (c == '\r' || c == '\n')
-                {
-                    // Si l'utilisateur appuie sur Entrée, terminer la saisie
-                    randomWord[i] = '\0';
-                    break;
-                }
-                else if (i < sizeof(randomWord) - 1)
-                {
-                    // Stocker le caractère dans le motSecret
-                    randomWord[i++] = c;
-                    // Afficher un astérisque à l'écran
-                    printf("*");
-                }
-            }
-            printf("\n  Voulez vous enregister ce mot dans le dictionnaire : \n");
-            printf("O. OUI \n");
-            printf("N. NON \n");
-            scanf(" %c", &rep);
-            if (rep == 'O')
-            {
-                addToDictionary(randomWord);
-                // Insert the word into the dictionary tree
-                dicoInsererMot(randomWord, &A, &queue);
-            }
+            free(randomWord);
         }
-        switch (a[0])
-        {
-        case 'e':
-            if (nbr == 2)
-            {
-
-                hangman(randomWord, 10, 'e', "Tour de Joueur 2");
-            }
-            else if (nbr == 1)
-            {
-                randomWord = motAleatoire(motArray, motCount, 2, 4);
-                hangman(randomWord, 10, 'e', "Mon tour");
-            }
-            break;
-        case 'm':
-            if (nbr == 2)
-            {
-                hangman(randomWord, 8, 'm', "Tour de Joueur 2");
-            }
-            else if (nbr == 1)
-            {
-                randomWord = motAleatoire(motArray, motCount, 4, 6);
-                hangman(randomWord, 8, 'm', "Mon tour");
-            }
-            break;
-        case 'h':
-            if (nbr == 2)
-            {
-                hangman(randomWord, 6, 'h', "Tour de Joueur 2");
-            }
-            else if (nbr == 1)
-            {
-                randomWord = motAleatoire(motArray, motCount, 7, 10);
-                hangman(randomWord, 6, 'h', "Mon tour");
-            }
-            break;
-        default:
-            printf("Niveau de difficulté non reconnu.\n");
-            scanf(" %1s", a);
-            break;
-        }
-        free(randomWord);
-    }
-    }
-    while(choix!=0);
+    } while (choix != 0);
 }

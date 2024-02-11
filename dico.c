@@ -358,8 +358,46 @@ void visualiserCaracteristiquesDictionnaire() {
         }
     }
 }
+// void supprimerLignesVides(const char *nomFichier) {
+//     // Ouvrir le fichier en mode lecture/écriture
+//     FILE *fichier = fopen(nomFichier, "r+");
+    
+//     // Vérifier si le fichier est ouvert avec succès
+//     if (fichier == NULL) {
+//         perror("Erreur lors de l'ouverture du fichier");
+//         exit(EXIT_FAILURE);
+//     }
+
+//     // Taille maximale d'une ligne dans le fichier (ajuster si nécessaire)
+//     const int tailleMaxLigne = 256;
+
+//     // Buffer pour stocker chaque ligne lue du fichier
+//     char ligne[tailleMaxLigne];
+
+//     // Position du curseur avant la lecture de chaque ligne
+//     long positionAvantLecture = ftell(fichier);
+
+//     // Parcourir le fichier ligne par ligne
+//     while (fgets(ligne, tailleMaxLigne, fichier) != NULL) {
+//         // Vérifier si la ligne est vide
+//         if (strlen(ligne) <= 1) { // <= 1 pour prendre en compte le caractère de nouvelle ligne '\n'
+//             // Si la ligne est vide, écraser la ligne
+//             fseek(fichier, positionAvantLecture, SEEK_SET);
+//             fprintf(fichier, "%*s", (int)strlen(ligne), "");
+//             fseek(fichier, 0, SEEK_CUR);
+//         }
+
+//         // Mettre à jour la position avant la lecture pour la prochaine ligne
+//         positionAvantLecture = ftell(fichier);
+//     }
+
+//     // Fermer le fichier
+//     fclose(fichier);
+// }
+
+
 void supprimerLignesVides(const char *nomFichier) {
-    // Ouvrir le fichier en mode lecture/écriture
+     // Ouvrir le fichier en mode lecture/écriture
     FILE *fichier = fopen(nomFichier, "r+");
     
     // Vérifier si le fichier est ouvert avec succès
@@ -368,28 +406,36 @@ void supprimerLignesVides(const char *nomFichier) {
         exit(EXIT_FAILURE);
     }
 
-    // Taille maximale d'une ligne dans le fichier (ajuster si nécessaire)
-    const int tailleMaxLigne = 256;
+    // Taille maximale d'un mot dans le fichier (ajuster si nécessaire)
+    const int tailleMaxMot = 100;
 
-    // Buffer pour stocker chaque ligne lue du fichier
-    char ligne[tailleMaxLigne];
+    // Buffer pour stocker chaque mot lu du fichier
+    char mot[tailleMaxMot];
 
-    // Position du curseur avant la lecture de chaque ligne
-    long positionAvantLecture = ftell(fichier);
+    // Position du curseur dans le fichier
+    long positionLecture = 0;
+    long positionEcriture = 0;
+    
+    // Parcourir le fichier mot par mot
+    while (fscanf(fichier, "%s", mot) == 1) {
+        // Stocker la position de lecture avant de lire le mot
+        positionLecture = ftell(fichier);
 
-    // Parcourir le fichier ligne par ligne
-    while (fgets(ligne, tailleMaxLigne, fichier) != NULL) {
-        // Vérifier si la ligne est vide
-        if (strlen(ligne) <= 1) { // <= 1 pour prendre en compte le caractère de nouvelle ligne '\n'
-            // Si la ligne est vide, écraser la ligne
-            fseek(fichier, positionAvantLecture, SEEK_SET);
-            fprintf(fichier, "%*s", (int)strlen(ligne), "");
-            fseek(fichier, 0, SEEK_CUR);
-        }
+        // Revenir au début du fichier pour écrire le mot sur une nouvelle ligne
+        fseek(fichier, positionEcriture, SEEK_SET);
 
-        // Mettre à jour la position avant la lecture pour la prochaine ligne
-        positionAvantLecture = ftell(fichier);
+        // Écrire le mot dans le fichier suivi d'un saut de ligne
+        fprintf(fichier, "%s\n", mot);
+
+        // Stocker la position d'écriture après avoir écrit le mot
+        positionEcriture = ftell(fichier);
+
+        // Revenir à la position de lecture pour lire le prochain mot
+        fseek(fichier, positionLecture, SEEK_SET);
     }
+
+    // Tronquer le fichier pour effacer les données restantes à la fin
+    ftruncate(fileno(fichier), positionEcriture);
 
     // Fermer le fichier
     fclose(fichier);

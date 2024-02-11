@@ -7,5 +7,6 @@ void sortDictionary();
 void addToDictionary(const char *word);
 void dicoInsererMot(char mot[], ArbreBin **arbre, QueueNode **queue);
 void visualiserCaracteristiquesDictionnaire();
+void supprimerLignesVides(const char *nomFichier);
 void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount);
 #endif
