@@ -247,6 +247,7 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
         dicoInsererMot((*motArray)[i], dictionnaire, NULL);
     }
 
+
     fclose(dico);
     sortDictionary();
 }

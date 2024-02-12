@@ -209,7 +209,6 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 printf(" ┃  %c %c\n", tentatives < 6 ? ' ' : '/', tentatives < 7 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                // printf("Désolé, la lettre %c n'est pas dans le mot.\n", lettre);
                 tentatives++;
             }
             if (a == 'h')
@@ -221,7 +220,6 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 printf(" ┃  %c %c\n", tentatives < 4 ? ' ' : '/', tentatives < 5 ? ' ' : '\\');
                 printf(" ┃\n");
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
-                // printf("Désolé, la lettre n'est pas dans le mot.\n");
                 tentatives++;
             }
             if (a == 'e')
@@ -238,9 +236,6 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                 printf("┏┻━━━━━━┓\n┃       ┗━┓\n┗━━━━━━━━━┛\n");
                 tentatives++;
             }
-            // else {
-            //     printf("Désolé, la lettre n'est pas dans le mot.\n");
-            //                 tentatives++;}
         }
     }
     printf(ANSI_COLOR_BLUE "\n******************************************************\n" ANSI_COLOR_RESET);
@@ -338,7 +333,6 @@ int main(int argc, char *argv[])
             addToDictionary(manuelle);
             // Insert the word into the dictionary tree
             dicoInsererMot(newWord, &A, &queue);
-            // printf("\n insertion terminé \n");
             //  Insert the word into the dynamic array
             char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
             if (newMotArray == NULL)
@@ -363,7 +357,6 @@ int main(int argc, char *argv[])
             printf("Donner le mot a supprimer :");
             scanf("%s", manuelle);
             supprimerMot("dictionnaire.txt", manuelle);
-            //supprimerLignesVides("dictionnaire.txt");
             break;
         case 5:
             visualiserCaracteristiquesDictionnaire();
