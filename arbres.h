@@ -1,5 +1,8 @@
 #ifndef DEF_ARBRES
 #define DEF_ARBRES
+#define ANSI_COLOR_RESET "\x1b[0m"
+#define ANSI_COLOR_GREEN "\x1b[32m"
+#define ANSI_COLOR_BLUE "\x1b[34m"
 typedef struct ArbreBin
 {
     char val;
@@ -594,11 +597,18 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     int motCount = 0;
     creerDictionnaire(&A, &motArray, &motCount);
     generateMermaidScript(A, "mermaid.md");
+
+   
     ArbreBin *res = initArbreBin();
-    construireSousArbre(A, &res, mot);
-    generateMermaidScript(res, "subtree.md");
-    char resultat[10];
+        char resultat[10];
+       int occ = rechercherMot("dictionnaire.txt", mot);
+    if (occ > 0)
+    {    printf("\nLe mot " ANSI_COLOR_BLUE "< %s >" ANSI_COLOR_RESET " existe dans le dictionnaire.\n", mot);
+         construireSousArbre(A, &res, mot);
     motDelArbre(resultat, res);
-    printf("le mot est %s \n", resultat);
+  generateMermaidScript(res, "subtree.md");}
+    else 
+        printf("\nLe mot " ANSI_COLOR_BLUE "< %s >" ANSI_COLOR_RESET " n'existe pas dans le dictionnaire.\n", mot);
+    
 }
 #endif

@@ -341,7 +341,7 @@ int main(int argc, char *argv[])
             generateMermaidScript(A, "mermaid.md");
             break;
         case 3:
-            printf("Donner le mot a chercher  ");
+            printf("Donner le mot a chercher : ");
             scanf("%s", manuelle);
             sousArbreDeRecherche(manuelle);
             break;
