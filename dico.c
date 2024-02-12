@@ -24,7 +24,7 @@ int piocherMot(char *motPioche)
         if (caractereLu == '\n')
             nombreMots++;
     } while (caractereLu != EOF);
-    numMotChoisi = nombreAleatoire(0,nombreMots); // On pioche un mot au hasard                                          // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon mot
+    numMotChoisi = nombreAleatoire(0, nombreMots); // On pioche un mot au hasard                                          // On recommence à lire le fichier depuis le début. On s'arrête lorsqu'on est arrivé au bon mot
     printf("\n le num choisi est %d: \n", numMotChoisi);
     rewind(dico);
     while (numMotChoisi > 0)
@@ -45,7 +45,7 @@ int piocherMot(char *motPioche)
     fclose(dico);
     return 1; // Tout s'est bien passé, on retourne 1
 }
-int nombreAleatoire(int nombreMin,int nombreMax)
+int nombreAleatoire(int nombreMin, int nombreMax)
 {
     srand(time(NULL));
     return (rand() % (nombreMax - nombreMin + 1)) + nombreMin;
@@ -250,18 +250,22 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
     fclose(dico);
     sortDictionary();
 }
-int rechercherMot(const char *file_path, const char *search_word) {
+int rechercherMot(const char *file_path, const char *search_word)
+{
     FILE *file = fopen(file_path, "r");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         printf("Erreur : fichier '%s' non trouvé.\n", file_path);
         return 0;
     }
 
     int occurrence = 0;
-    char buffer[100]; 
+    char buffer[100];
 
-    while (fscanf(file, "%s", buffer) == 1) {
-        if (strcmp(buffer, search_word) == 0) {
+    while (fscanf(file, "%s", buffer) == 1)
+    {
+        if (strcmp(buffer, search_word) == 0)
+        {
             occurrence++;
         }
     }
@@ -269,35 +273,41 @@ int rechercherMot(const char *file_path, const char *search_word) {
     fclose(file);
     return occurrence;
 }
-void visualiserCaracteristiquesDictionnaire() {
+void visualiserCaracteristiquesDictionnaire()
+{
     FILE *file = fopen("dictionnaire.txt", "r");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         printf("Error: File '%s' not found.\n", "dictionnaire.txt");
         return;
     }
 
-      int total_words = 0;
+    int total_words = 0;
     int total_characters = 0;
     int shortest_length = -1;
     int longest_length = -1;
-    int word_count_by_length[20] = {0};  // Assuming words have lengths between 1 and 20 characters
+    int word_count_by_length[20] = {0}; // Assuming words have lengths between 1 and 20 characters
 
-    char buffer[100]; 
+    char buffer[100];
 
-    while (fscanf(file, "%s", buffer) == 1) {
+    while (fscanf(file, "%s", buffer) == 1)
+    {
         int length = strlen(buffer);
         total_words++;
         total_characters += length;
 
-        if (shortest_length == -1 || length < shortest_length) {
+        if (shortest_length == -1 || length < shortest_length)
+        {
             shortest_length = length;
         }
 
-        if (length > longest_length) {
+        if (length > longest_length)
+        {
             longest_length = length;
         }
 
-        if (length >= 1 && length <= 20) {
+        if (length >= 1 && length <= 20)
+        {
             word_count_by_length[length - 1]++;
         }
     }
@@ -308,39 +318,46 @@ void visualiserCaracteristiquesDictionnaire() {
 
     printf("\nStatistiques du dictionnaire :\n");
     printf("==============================\n");
-    printf("Nombre total de mots           : \x1b[32m%d\x1b[0m\n", total_words); 
+    printf("Nombre total de mots           : \x1b[32m%d\x1b[0m\n", total_words);
     printf("Longueur moyenne des mots      : \x1b[34m%.2f\x1b[0m caractères\n", average_length);
     printf("Longueur du mot le plus court  : \x1b[31m%d\x1b[0m caractères\n", shortest_length);
     printf("Longueur du mot le plus long   : \x1b[33m%d\x1b[0m caractères\n", longest_length);
 
     printf("\nNombre de mots par longueur   :\n");
-    for (int i = 0; i < 20; i++) {
-        if( word_count_by_length[i] != 0)
+    for (int i = 0; i < 20; i++)
+    {
+        if (word_count_by_length[i] != 0)
             printf("   Longueur %d caractères    : %d mots\n", i + 1, word_count_by_length[i]);
     }
 
     printf("==============================\n\n");
-    
+
     char user_choice;
     printf("\nVoulez-vous rechercher un mot spécifique? (O/N): ");
     scanf(" %c", &user_choice);
-     if (user_choice == 'O' || user_choice == 'o') {
+    if (user_choice == 'O' || user_choice == 'o')
+    {
         char search_word[100];
         printf("Entrez le mot à rechercher : ");
         scanf("%s", search_word);
 
         int occurrence = rechercherMot("dictionnaire.txt", search_word);
 
-        if (occurrence > 0) {
+        if (occurrence > 0)
+        {
             printf("Le mot '%s' existe dans le dictionnaire et apparaît %d fois.\n", search_word, occurrence);
-        } else {
+        }
+        else
+        {
             char add_choice;
             printf("Le mot '%s' n'existe pas dans le dictionnaire. Voulez-vous l'ajouter? (O/N): ", search_word);
             scanf(" %c", &add_choice);
 
-            if (add_choice == 'O' || add_choice == 'o') {
+            if (add_choice == 'O' || add_choice == 'o')
+            {
                 FILE *file = fopen("dictionnaire.txt", "a+");
-                if (file == NULL) {
+                if (file == NULL)
+                {
                     printf("Erreur lors de l'ouverture du fichier.\n");
                 }
 
@@ -352,19 +369,23 @@ void visualiserCaracteristiquesDictionnaire() {
 
                 // Display updated dictionary statistics
                 visualiserCaracteristiquesDictionnaire("dictionnaire.txt");
-            } else {
+            }
+            else
+            {
                 printf("Le mot '%s' n'a pas été ajouté au dictionnaire.\n", search_word);
             }
         }
     }
 }
 
-void supprimerLignesVides(const char *nomFichier) {
-     // Ouvrir le fichier en mode lecture/écriture
+void supprimerLignesVides(const char *nomFichier)
+{
+    // Ouvrir le fichier en mode lecture/écriture
     FILE *fichier = fopen(nomFichier, "r+");
-    
+
     // Vérifier si le fichier est ouvert avec succès
-    if (fichier == NULL) {
+    if (fichier == NULL)
+    {
         perror("Erreur lors de l'ouverture du fichier");
         exit(EXIT_FAILURE);
     }
@@ -378,9 +399,10 @@ void supprimerLignesVides(const char *nomFichier) {
     // Position du curseur dans le fichier
     long positionLecture = 0;
     long positionEcriture = 0;
-    
+
     // Parcourir le fichier mot par mot
-    while (fscanf(fichier, "%s", mot) == 1) {
+    while (fscanf(fichier, "%s", mot) == 1)
+    {
         // Stocker la position de lecture avant de lire le mot
         positionLecture = ftell(fichier);
 
@@ -404,12 +426,14 @@ void supprimerLignesVides(const char *nomFichier) {
     fclose(fichier);
 }
 
-void supprimerMot(const char *nomFichier, const char *motASupprimer) {
+void supprimerMot(const char *nomFichier, const char *motASupprimer)
+{
     // Ouvrir le fichier en mode lecture/écriture
     FILE *fichier = fopen(nomFichier, "r+");
-    
+
     // Vérifier si le fichier est ouvert avec succès
-    if (fichier == NULL) {
+    if (fichier == NULL)
+    {
         perror("Erreur lors de l'ouverture du fichier");
         exit(EXIT_FAILURE);
     }
@@ -420,18 +444,37 @@ void supprimerMot(const char *nomFichier, const char *motASupprimer) {
     // Buffer pour stocker chaque mot lu du fichier
     char mot[tailleMaxMot];
 
-    // Parcourir le fichier mot par mot
-    while (fscanf(fichier, "%s", mot) == 1) {
-        // Vérifier si le mot actuel est égal au mot à supprimer
-        if (strcmp(mot, motASupprimer) == 0) {
-            // Si le mot correspond, le sauter en déplaçant la position du curseur
-            fseek(fichier, -strlen(mot), SEEK_CUR);
-            fprintf(fichier, "%*s", (int)strlen(mot), "");  // Effacer le mot
-            fseek(fichier, 0, SEEK_CUR);  // Déplacer le curseur à la position actuelle
+    int occ = rechercherMot(nomFichier, motASupprimer);
+    if (occ == 0)
+    {
+    printf("\033[31m"); // Séquence d'échappement pour changer la couleur en rouge
+    printf("  ___  _   _ ___  ___   _   _  \n");
+    printf("  / _ \\| | | | _ \\/ __| | | | | \n");
+    printf(" | (_) | |_| |  _/\\__ \\ |_| |_| \n");
+    printf("  \\___/ \\___/|_|  |___/ (_) (_) \n");
+    printf("\033[0m"); // Séquence d'échappement pour réinitialiser la couleur à la couleur par défaut
+    printf("\n");
+    printf("\033[31m"); // Séquence d'échappement pour changer la couleur en rouge
+    printf("Desole, le mot \"%s\" n'existe pas dans le dictionnaire!\n", motASupprimer);
+    printf("\033[0m"); // Séquence d'échappement pour réinitialiser la couleur à la couleur par défaut
+    }
+    else
+    {
+        // Parcourir le fichier mot par mot
+        while (fscanf(fichier, "%s", mot) == 1)
+        {
+            // Vérifier si le mot actuel est égal au mot à supprimer
+            if (strcmp(mot, motASupprimer) == 0)
+            {
+                // Si le mot correspond, le sauter en déplaçant la position du curseur
+                fseek(fichier, -strlen(mot), SEEK_CUR);
+                fprintf(fichier, "%*s", (int)strlen(mot), ""); // Effacer le mot
+                fseek(fichier, 0, SEEK_CUR);                   // Déplacer le curseur à la position actuelle
+            }
         }
     }
 
     // Fermer le fichier
     fclose(fichier);
-supprimerLignesVides("dictionnaire.txt");
+    supprimerLignesVides("dictionnaire.txt");
 }
