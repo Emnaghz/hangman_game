@@ -574,7 +574,7 @@ void motDelArbre(char *mot, ArbreBin *A)
         {
             printf("\n %c ", A->val);
             *mot = A->val;
-            motDelArbre(mot+1, A->FG);
+            motDelArbre(mot + 1, A->FG);
         }
         else
         {
@@ -583,12 +583,12 @@ void motDelArbre(char *mot, ArbreBin *A)
     }
     else
     {
-        *mot='\0';
+        *mot = '\0';
     };
 }
 #include "dico.h"
 ArbreBin *sousArbreDeRecherche(char *mot)
-{ 
+{
     ArbreBin *A = NULL;
     char **motArray = NULL;
     int motCount = 0;
@@ -598,7 +598,7 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     construireSousArbre(A, &res, mot);
     generateMermaidScript(res, "subtree.md");
     char resultat[10];
-   
+
     motDelArbre(resultat, res);
     printf("le mot est %s \n", resultat);
 }

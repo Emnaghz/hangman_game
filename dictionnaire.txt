@@ -16,5 +16,6 @@ fraction
 glouton
 insolite
 savoir
+tour
 tunisie
 volcanique

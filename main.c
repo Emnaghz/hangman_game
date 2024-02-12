@@ -125,7 +125,6 @@ void afficherMot(char *mot, char *lettresDevinees)
 int hangman(char *mot, int maxTentatives, char a, char *mode)
 {
     printf("\n\t Be aware you can be hanged !!\n");
-
     // Ascii Art
     printf("       _                                             \n");
     printf("      | |                                            \n");
@@ -138,9 +137,7 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
     printf("      \n");
     char lettresDevinees[26] = {'\0'}; // Array to store guessed letters
     int tentatives = 0;
-
     printf("\t Bienvenue dans le jeu du Pendu !\n");
-
     while (tentatives < maxTentatives)
     {
         printf(ANSI_COLOR_MAGENTA "\n*******************************************\n" ANSI_COLOR_RESET);
@@ -152,18 +149,14 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
         printf("Devinez une lettre : ");
         scanf(" %c", &lettre);
         lettre = tolower(lettre); // Convert to lowercase
-
         if (strchr(lettresDevinees, lettre) != NULL)
         {
             printf("Vous avez déjà deviné cette lettre. Essayez encore.\n");
             continue;
         }
-
         lettresDevinees[strlen(lettresDevinees)] = lettre;
-
         if (strchr(mot, lettre) != NULL)
         {
-
             printf("Bonne devinette !\n");
             int motComplet = 1;
             for (int i = 0; i < strlen(mot); i++)
@@ -174,7 +167,6 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
                     break;
                 }
             }
-
             if (motComplet)
             {
                 printf(ANSI_COLOR_BLUE "\n***********************************************************************************\n" ANSI_COLOR_RESET);
@@ -319,7 +311,7 @@ int main(int argc, char *argv[])
             printf("Exiting the program. Goodbye!\n");
             break;
         case 1:
-            printf("donner le mot a inserer ");
+            printf("Donner le mot a inserer ");
             scanf("%s", manuelle);
             //  Allocate memory for the new word in the dynamic array
             char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
@@ -405,13 +397,13 @@ int main(int argc, char *argv[])
                 switch (a[0])
                 {
                 case 'e':
-                    printf("Vous etes en niveau easy de preference ,le mot entre 2 et 4 caracteres \n");
+                    printf("Vous etes en niveau easy, de preference ,le mot entre 2 et 4 caracteres \n");
                     break;
                 case 'm':
-                    printf("Vous etes en niveau medium   de preference le mot entre 4 et 6 caracteres \n");
+                    printf("Vous etes en niveau medium, de preference le mot entre 4 et 6 caracteres \n");
                     break;
                 case 'h':
-                    printf("Vous etes en niveau hard ,de preference le mot entre 7 et 10 caracteres \n ");
+                    printf("Vous etes en niveau hard, de preference le mot entre 7 et 10 caracteres \n ");
                     break;
                 default:
                     printf("Niveau de difficulté non reconnu.\n");
@@ -450,7 +442,6 @@ int main(int argc, char *argv[])
             case 'e':
                 if (nbr == 2)
                 {
-
                     hangman(randomWord, 10, 'e', "Tour de Joueur 2");
                 }
                 else if (nbr == 1)
