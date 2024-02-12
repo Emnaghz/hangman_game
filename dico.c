@@ -3,6 +3,7 @@
 #include <time.h>
 #include <string.h>
 #include "dico.h"
+#include <unistd.h>
 int piocherMot(char *motPioche)
 {
     FILE *dico = NULL; // Le pointeur de fichier qui va contenir notre fichier

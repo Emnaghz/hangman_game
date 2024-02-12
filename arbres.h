@@ -598,7 +598,6 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     construireSousArbre(A, &res, mot);
     generateMermaidScript(res, "subtree.md");
     char resultat[10];
-
     motDelArbre(resultat, res);
     printf("le mot est %s \n", resultat);
 }
