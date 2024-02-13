@@ -393,7 +393,6 @@ int main(int argc, char *argv[])
                 printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
                 printf(ANSI_COLOR_MAGENTA "\t Tour de Joueur 1 : \n" ANSI_COLOR_RESET);
                 printf(ANSI_COLOR_MAGENTA "*******************************************\n" ANSI_COLOR_RESET);
-                printf("Joueur 1, veuillez entrer le mot secret : \n");
                 switch (a[0])
                 {
                 case 'e':
@@ -407,8 +406,11 @@ int main(int argc, char *argv[])
                     break;
                 default:
                     printf("Niveau de difficulté non reconnu.\n");
+                    printf("Choisir le niveau de difficulté :\n");
+                     scanf(" %1s", a);
                     break;
                 }
+                printf("Joueur 1, veuillez entrer le mot secret : \n");
                 while (1)
                 {
                     c = getch();
