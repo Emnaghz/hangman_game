@@ -50,46 +50,6 @@ char *motAleatoire(char **motArray, int motCount, int mn, int mx)
     return motArray[randomIndex];
 }
 
-void arbres()
-{
-    ArbreBin *A = exempleArbre();
-    QueueNode *queue = NULL;
-    generateMermaidScript(A, "mermaid.md");
-    // Liste *L=initListe();
-
-    // ArbreBin *dictionnaire = genererABR();
-    // ArbreBin *P=rechercheRecurABR(A,'j',&L);
-    // ArbreBin *P=rechercheArbreBin2(A,'j',&L);
-    // noeudsdelarbre(A,&L);
-    // afficherArbreBinaire(A);
-    // afficherListe(L);
-    // parcoursInfixe(dictionnaire);
-
-    // coupure(A, 13, &G, &D);
-    // parcoursInfixe(G);
-    // printf("\n");
-    // parcoursInfixe(D);
-
-    // afficherArbreBinaire(A);
-    // printf("\n sous arbre gauche \n");
-    // afficherArbreBinaire(G);
-    // printf("\n sous arbre droite \n");
-    // afficherArbreBinaire(D);
-
-    // printf("parcours infixe: (pour un ABR on obtient des valeurs triées) ");
-    // parcoursInfixe(A);
-    // printf("\n l'arbre est binaire (0:non | 1: oui) %d", estABR(A));
-    // printf("\n l'hauteur  de l'arbre est %d ", hauteurAbreRecur(A));
-    // printf("\n le nombres de feuilles  de l'arbre %d ", nombreFeuilles(A));
-    // printf("\n maximum  de l'arbre %d ", maximumArbre(A));
-    // int entree;
-    // printf("quel elt cherchez-vous dans l'arbre? ");
-    // scanf("%d", &entree);
-    // printf("\n recherche récursive de l'element %d dans l'arbre (0:non | 1: oui) %d ",entree, rechercheArbreBin(A, 25));
-    // printf("\n sous arbre avec la cle %d \n",entree);
-    // afficherArbreBinaire(rechercheArbreBin2(A, entree));
-    // libererArbre(A);
-}
 
 void afficherMot(char *mot, char *lettresDevinees)
 {
@@ -279,7 +239,7 @@ char getch()
 int main(int argc, char *argv[])
 {
     char manuelle[100];
-    arbres();
+    //arbres();
     int choix;
     ArbreBin *A = NULL;
     char **motArray = NULL;
@@ -314,18 +274,15 @@ int main(int argc, char *argv[])
             printf("Donner le mot a inserer ");
             scanf("%s", manuelle);
             //  Allocate memory for the new word in the dynamic array
-            char *newWord = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
+            char *newWord = (char *)malloc(100 * sizeof(char)); 
             if (newWord == NULL)
             {
                 printf("\nMemory allocation error");
                 break;
             }
-            // Copy the manually entered word to the new memory
             strcpy(newWord, manuelle);
             addToDictionary(manuelle);
-            // Insert the word into the dictionary tree
             dicoInsererMot(newWord, &A, &queue);
-            //  Insert the word into the dynamic array
             char **newMotArray = (char **)realloc(motArray, (motCount + 1) * sizeof(char *));
             if (newMotArray == NULL)
             {

@@ -201,14 +201,12 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
 
     char mot[100];
 
-    // Count the number of words in the file
     *motCount = 0;
     while (fgets(mot, sizeof(mot), dico) != NULL)
     {
         (*motCount)++;
     }
 
-    // Allocate memory for the dynamic array
     *motArray = (char **)malloc(*motCount * sizeof(char *));
     if (*motArray == NULL)
     {
@@ -217,19 +215,16 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
         return;
     }
 
-    // Rewind the file to the beginning
     rewind(dico);
 
-    // Read each word from the file and insert it into the tree and array
     for (int i = 0; i < *motCount; i++)
     {
-        (*motArray)[i] = (char *)malloc(100 * sizeof(char)); // Assuming the maximum word length is 100
+        (*motArray)[i] = (char *)malloc(100 * sizeof(char)); 
         if ((*motArray)[i] == NULL)
         {
             printf("\nMemory allocation error");
             fclose(dico);
 
-            // Free the allocated memory before returning
             for (int j = 0; j < i; j++)
             {
                 free((*motArray)[j]);
@@ -241,10 +236,8 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
 
         fgets((*motArray)[i], 100, dico);
 
-        // Remove newline character at the end
         (*motArray)[i][strcspn((*motArray)[i], "\n")] = '\0';
 
-        // Insert the word into the dictionary tree
         dicoInsererMot((*motArray)[i], dictionnaire, NULL);
     }
 
