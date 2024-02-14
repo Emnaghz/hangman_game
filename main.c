@@ -15,38 +15,17 @@
 #define ANSI_COLOR_BLUE "\x1b[34m"
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 ArbreBin *exempleArbre()
-{
-    // 0              a
-    // 1         c           t
-    // 2      a    j    s     x
-    ArbreBin *A;
-    A = initArbreBin();
-    A = creerFeuille('a');
-    A->FG = creerFeuille('c');
-    A->FD = creerFeuille('t');
-    A->FD->FG = creerFeuille('t');
-    A->FD->FD = creerFeuille('e');
-    A->FG->FD = creerFeuille('f');
-    A->FG->FG = creerFeuille('\0');
-
-    return A;
-}
-
 char *motAleatoire(char **motArray, int motCount, int mn, int mx)
 {
     int a = nombreAleatoire(mn, mx);
     if (motCount <= 0 || motArray == NULL)
     {
-        // Invalid input or empty array
         return NULL;
     }
     srand(time(NULL));
-    // Generate a random index
-    // printf("le nombre %d", a);
     int randomIndex = rand() % motCount;
     while (strlen(motArray[randomIndex]) != a)
         randomIndex = rand() % motCount;
-    // Return the word at the random index
     return motArray[randomIndex];
 }
 
@@ -95,7 +74,7 @@ int hangman(char *mot, int maxTentatives, char a, char *mode)
     printf("                          __/ |                      \n");
     printf("                         |___/  \n");
     printf("      \n");
-    char lettresDevinees[26] = {'\0'}; // Array to store guessed letters
+    char lettresDevinees[26] = {'\0'}; 
     int tentatives = 0;
     printf("\t Bienvenue dans le jeu du Pendu !\n");
     while (tentatives < maxTentatives)
@@ -260,11 +239,9 @@ int main(int argc, char *argv[])
         printf("\t 6. Jouer au Pendu\n");
         printf("\t 0. Quitter\n");
         printf(ANSI_COLOR_MAGENTA "============================================================ \n" ANSI_COLOR_RESET);
-        // Get user choice
         printf("Choix: ");
         scanf("%d", &choix);
         printf("\n \n");
-        // Perform action based on user choice
         switch (choix)
         {
         case 0:
@@ -273,7 +250,6 @@ int main(int argc, char *argv[])
         case 1:
             printf("Donner le mot a inserer ");
             scanf("%s", manuelle);
-            //  Allocate memory for the new word in the dynamic array
             char *newWord = (char *)malloc(100 * sizeof(char)); 
             if (newWord == NULL)
             {
@@ -379,9 +355,8 @@ int main(int argc, char *argv[])
                     }
                     else if (i < sizeof(randomWord) - 1)
                     {
-                        // Stocker le caractère dans le motSecret
                         randomWord[i++] = c;
-                        // Afficher un astérisque à l'écran
+                       
                         printf("*");
                     }
                 }
@@ -392,7 +367,6 @@ int main(int argc, char *argv[])
                 if (rep == 'O')
                 {
                     addToDictionary(randomWord);
-                    // Insert the word into the dictionary tree
                     dicoInsererMot(randomWord, &A, &queue);
                 }
             }

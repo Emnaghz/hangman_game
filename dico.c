@@ -67,56 +67,37 @@ void sortDictionary()
 
     char **words = NULL;
     char word[1000];
-
-    // Read words into an array
     int wordCount = 0;
     while (fgets(word, 1000, file) != NULL)
     {
-        // Remove newline character
         word[strcspn(word, "\n")] = '\0';
-
-        // Allocate memory for the word and copy it
         char *newWord = strdup(word);
-
-        // Resize the array
         words = (char **)realloc(words, (wordCount + 1) * sizeof(char *));
         if (words == NULL)
         {
             printf("Memory allocation error.\n");
-            // Handle the error appropriately
             fclose(file);
             return;
         }
-
-        // Add the word to the array
         words[wordCount] = newWord;
         wordCount++;
     }
-
     fclose(file);
-
     // Sort the array
     qsort(words, wordCount, sizeof(char *), compareStrings);
-
-    // Open the file for writing (overwrite)
     file = fopen("dictionnaire.txt", "w");
     if (file == NULL)
     {
         printf("Error opening the file for writing.\n");
         return;
     }
-
-    // Write the sorted words to the file
     for (int i = 0; i < wordCount; i++)
     {
         fprintf(file, "%s\n", words[i]);
         // Free memory allocated for each word
         free(words[i]);
     }
-
-    // Free memory allocated for the array
     free(words);
-
     fclose(file);
 }
 void addToDictionary(const char *word)
@@ -131,7 +112,6 @@ void addToDictionary(const char *word)
     else
     {
         printf("Error opening the file for writing.\n");
-        // Handle the error appropriately
     }
     sortDictionary();
 }
@@ -219,7 +199,7 @@ void creerDictionnaire(ArbreBin **dictionnaire, char ***motArray, int *motCount)
 
     for (int i = 0; i < *motCount; i++)
     {
-        (*motArray)[i] = (char *)malloc(100 * sizeof(char)); 
+        (*motArray)[i] = (char *)malloc(100 * sizeof(char));
         if ((*motArray)[i] == NULL)
         {
             printf("\nMemory allocation error");
@@ -374,70 +354,42 @@ void visualiserCaracteristiquesDictionnaire()
 
 void supprimerLignesVides(const char *nomFichier)
 {
-    // Ouvrir le fichier en mode lecture/écriture
     FILE *fichier = fopen(nomFichier, "r+");
 
-    // Vérifier si le fichier est ouvert avec succès
     if (fichier == NULL)
     {
         perror("Erreur lors de l'ouverture du fichier");
         exit(EXIT_FAILURE);
     }
 
-    // Taille maximale d'un mot dans le fichier (ajuster si nécessaire)
     const int tailleMaxMot = 100;
-
-    // Buffer pour stocker chaque mot lu du fichier
     char mot[tailleMaxMot];
-
-    // Position du curseur dans le fichier
     long positionLecture = 0;
     long positionEcriture = 0;
 
-    // Parcourir le fichier mot par mot
     while (fscanf(fichier, "%s", mot) == 1)
     {
-        // Stocker la position de lecture avant de lire le mot
         positionLecture = ftell(fichier);
 
-        // Revenir au début du fichier pour écrire le mot sur une nouvelle ligne
         fseek(fichier, positionEcriture, SEEK_SET);
-
-        // Écrire le mot dans le fichier suivi d'un saut de ligne
         fprintf(fichier, "%s\n", mot);
-
-        // Stocker la position d'écriture après avoir écrit le mot
         positionEcriture = ftell(fichier);
-
-        // Revenir à la position de lecture pour lire le prochain mot
         fseek(fichier, positionLecture, SEEK_SET);
     }
-
-    // Tronquer le fichier pour effacer les données restantes à la fin
     ftruncate(fileno(fichier), positionEcriture);
-
-    // Fermer le fichier
     fclose(fichier);
 }
 
 void supprimerMot(const char *nomFichier, const char *motASupprimer)
 {
-    // Ouvrir le fichier en mode lecture/écriture
     FILE *fichier = fopen(nomFichier, "r+");
-
-    // Vérifier si le fichier est ouvert avec succès
     if (fichier == NULL)
     {
         perror("Erreur lors de l'ouverture du fichier");
         exit(EXIT_FAILURE);
     }
-
-    // Taille maximale d'un mot dans le fichier (ajuster si nécessaire)
     const int tailleMaxMot = 100;
-
-    // Buffer pour stocker chaque mot lu du fichier
     char mot[tailleMaxMot];
-
     int occ = rechercherMot(nomFichier, motASupprimer);
     if (occ == 0)
     {
@@ -454,21 +406,16 @@ void supprimerMot(const char *nomFichier, const char *motASupprimer)
     }
     else
     {
-        // Parcourir le fichier mot par mot
         while (fscanf(fichier, "%s", mot) == 1)
         {
-            // Vérifier si le mot actuel est égal au mot à supprimer
             if (strcmp(mot, motASupprimer) == 0)
             {
-                // Si le mot correspond, le sauter en déplaçant la position du curseur
                 fseek(fichier, -strlen(mot), SEEK_CUR);
                 fprintf(fichier, "%*s", (int)strlen(mot), ""); // Effacer le mot
                 fseek(fichier, 0, SEEK_CUR);                   // Déplacer le curseur à la position actuelle
             }
         }
     }
-
-    // Fermer le fichier
     fclose(fichier);
     supprimerLignesVides("dictionnaire.txt");
 }

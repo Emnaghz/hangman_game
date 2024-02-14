@@ -509,17 +509,17 @@ ArbreBin *sousArbreDeRecherche(char *mot)
     creerDictionnaire(&A, &motArray, &motCount);
     generateMermaidScript(A, "mermaid.md");
 
-   
     ArbreBin *res = initArbreBin();
-        char resultat[10];
-       int occ = rechercherMot("dictionnaire.txt", mot);
+    char resultat[10];
+    int occ = rechercherMot("dictionnaire.txt", mot);
     if (occ > 0)
-    {    printf("\nLe mot " ANSI_COLOR_BLUE "< %s >" ANSI_COLOR_RESET " existe dans le dictionnaire.\n", mot);
-         construireSousArbre(A, &res, mot);
-    motDelArbre(resultat, res);
-  generateMermaidScript(res, "subtree.md");}
-    else 
+    {
+        printf("\nLe mot " ANSI_COLOR_BLUE "< %s >" ANSI_COLOR_RESET " existe dans le dictionnaire.\n", mot);
+        construireSousArbre(A, &res, mot);
+        motDelArbre(resultat, res);
+        generateMermaidScript(res, "subtree.md");
+    }
+    else
         printf("\nLe mot " ANSI_COLOR_BLUE "< %s >" ANSI_COLOR_RESET " n'existe pas dans le dictionnaire.\n", mot);
-    
 }
 #endif
