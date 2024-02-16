@@ -14,7 +14,6 @@
 #define ANSI_COLOR_GREEN "\x1b[32m"
 #define ANSI_COLOR_BLUE "\x1b[34m"
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
-ArbreBin *exempleArbre()
 char *motAleatoire(char **motArray, int motCount, int mn, int mx)
 {
     int a = nombreAleatoire(mn, mx);
