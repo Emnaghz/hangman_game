@@ -1,11 +1,12 @@
 # Hangman Game
+
 #Features
-    Add words to the dictionary.
-    Visualize the word tree.
-    Search for a specific word.
-    Delete a word from the dictionary.
-    View dictionary statistics.
-    Play the classic Hangman game.
+    -Add words to the dictionary.
+    -Visualize the word tree.
+    -Search for a specific word.
+    -Delete a word from the dictionary.
+    -View dictionary statistics.
+    -Play the classic Hangman game.
     
  ## Modes
 - Solo Mode: The system randomly selects a word according to the chosen difficulty level. The player's objective is to guess the word within the maximum allowed attempts.
@@ -16,9 +17,12 @@ To compile and build :
 ```bash
 $ make
 ```
-
+## How to Run
+There are three levels of difficulty: easy, medium, and hard. These difficulty levels are determined based on the length of the word to be guessed and the number of attempts allowed to guess it
+ Difficulty Levels 
 To run : 
 
 ```bash
 ./hangman
 ```
+
