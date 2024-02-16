@@ -1,17 +1,11 @@
 # Hangman Game
 
-## Features 
-
+##Features
     -Add words to the dictionary.
-    
     -Visualize the word tree.
-    
     -Search for a specific word.
-    
     -Delete a word from the dictionary.
-    
     -View dictionary statistics.
-    
     -Play the classic Hangman game.
     
  ## Modes
