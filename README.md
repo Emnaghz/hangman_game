@@ -20,7 +20,7 @@ There are three levels of difficulty: easy, medium, and hard.
 
 These difficulty levels are determined based on the length of the word to be guessed and the number of attempts allowed to guess it.
 
-## How to Run
+## How to compile/run : 
 To compile and build : 
 ```bash
 $ make
