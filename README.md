@@ -4,17 +4,17 @@ In this project, we explore the fun world of manipulating dictionaries and playi
 Our project provides a smooth experience for users to interact with the game, explore the details of the dictionary, and challenge themselves with word-guessing fun.
 
  ## Features 
--Add words to the dictionary.
+- Add words to the dictionary.
 
--Visualize the word tree.
+- Visualize the word tree.
 
--Search for a specific word.
+- Search for a specific word.
 
--Delete a word from the dictionary.
+- Delete a word from the dictionary.
 
--View dictionary statistics.
+- View dictionary statistics.
 
--Play the classic Hangman game.
+- Play the classic Hangman game.
 
  ## Modes
 - Solo Mode: The system randomly selects a word according to the chosen difficulty level. The player's objective is to guess the word within the maximum allowed attempts.
@@ -26,8 +26,10 @@ There are three levels of difficulty: easy, medium, and hard.
 
 These difficulty levels are determined based on the length of the word to be guessed and the number of attempts allowed to guess it.
 
-## How to compile/run : 
-To compile and build : 
+## Run the project & Play the game : 
+First install the Preview Mermaid extention on VSCode for tree visualisation.
+
+Move to the project directory then compile and build with the following command : 
 ```bash
 $ make
 ```
@@ -36,4 +38,18 @@ To run :
 ```bash
 ./hangman
 ```
+## Project Overview :
 
+### Menu
+![](images/fig4.png "Figure 1 : Menu Screen")
+
+### Dictionary Tree View
+![](images/fig5.png "Figure 2 : View corresponding Tree of dictionary")
+
+### Dictionary Statistics
+![](images/fig6.png "Figure 3 : View dictionary statistics")
+
+### Play the game
+![](images/fig7.png)
+![](images/fig8.png)
+![](images/fig9.png)
